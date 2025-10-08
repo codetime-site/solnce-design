@@ -1,0 +1,58 @@
+.contact__content
+    gap 55px
+
+.contact .maps__btm > div
+    background: clr(gr)
+
+.contact__img
+    position relative
+    height 268px
+    overflow: hidden
+    width 100%
+
+.contact__img > img
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: bottom;
+
+.contact__img h2 
+    position: absolute 
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+
+.contact__btm
+    gap: 55px 
+    align-items: flex-start
+
+.contact__cont
+    padding: 29px;
+    background: clrgb(gr,.3);
+
+li.contact__main_list
+    font-weight: 900
+    font-size: 1.1em
+    font-family: fnt(prim_eb)
+
+li.contact__main_list > i  
+    color clr(sun)
+    padding-right: 8px;
+
+ul.sec_list   
+    font-weight: 100
+    font-family: fnt(prim_reg)
+    font-size: .8em
+    padding-left: 36px;
+    padding-bottom: 11px;
+
+ul.sec_list li  
+    line-height: 1.8em
+
+.sec_list--red
+    color clr(sun)
+    font-weight: 800
+
++below(t)
+    .contact__img 
+        height: 158px

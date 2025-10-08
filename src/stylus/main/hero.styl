@@ -1,0 +1,60 @@
+.hero
+    position relative
+    padding: unset    
+
+.hero__backImg
+    width 100%
+    height: 681px;
+
+.hero__backImg img
+    width: 100%;
+    height: 100%
+    object-fit: cover;
+
+.hero__content
+    gap: 47px;
+    position: absolute
+    top: 50%;
+    transform: translateY(-50%);
+    padding 0 15em
+    left: 0
+    width 100%
+
+.hero__subs
+    color clr(blck);
+    font-family: fnt(prim_reg);
+    font-weight: 600
+    font-size: 1.3em;
+    text-align: center;
+
+.btn_sec i  
+    vertical-align: middle
+
++below(d)
+    .hero__content
+        gap 14px
+        padding 0 1em   
+
++below(t)
+    .hero__backImg
+        height: 452px
+        
+    .hero__content
+        padding 0 1em   
+    
+    .hero__subs 
+        font-size: 1em
+
++below(m)
+
+    .hero__subs 
+        font-size: .9em;
+        line-height: 1.2em;
+
++below(esm)
+    h1 
+        font-size: 1em
+
+    .hero__subs 
+        font-size: .8em;
+        line-height: 1em;

@@ -1,0 +1,657 @@
+<?php
+/*
+Template Name: 
+Template Post Type: page
+*/
+
+// Функция для получения дочерних категорий из родительской
+function get_child_categories($parent_slug, $taxonomy = 'category')
+{
+    $parent_category = get_term_by('slug', $parent_slug, $taxonomy);
+    if (!$parent_category) {
+        return [];
+    }
+
+    $child_categories = get_terms(array(
+        'taxonomy' => $taxonomy,
+        'orderby' => 'name',
+        'order' => 'ASC',
+        'hide_empty' => false,
+        'parent' => $parent_category->term_id
+    ));
+
+    $options = [];
+    if (!is_wp_error($child_categories)) {
+        foreach ($child_categories as $category) {
+            $options[$category->slug] = $category->name;
+        }
+    }
+
+    return $options;
+}
+
+
+// Получаем опции фильтров из WordPress категорий
+// Примеры использования:
+// Для стандартных категорий WordPress:
+$color_options = get_child_categories('col');
+$style_options = get_child_categories('style');
+$material_options = get_child_categories('materials');
+
+// Функция для получения дочерних терминов из произвольной таксономии
+function get_child_terms($parent_slug, $taxonomy = 'category')
+{
+    $parent_term = get_term_by('slug', $parent_slug, $taxonomy);
+    if (!$parent_term) {
+        return [];
+    }
+
+    $child_terms = get_terms(array(
+        'taxonomy' => $taxonomy,
+        'orderby' => 'name',
+        'order' => 'ASC',
+        'hide_empty' => false,
+        'parent' => $parent_term->term_id
+    ));
+
+    $options = [];
+    if (!is_wp_error($child_terms)) {
+        foreach ($child_terms as $term) {
+            $options[$term->slug] = $term->name;
+        }
+    }
+
+    return $options;
+}
+
+
+
+
+// Если категории не найдены, используем fallback значения
+if (empty($color_options)) {
+    $color_options = [
+        'белый' => 'Белый',
+        'черный' => 'Черный',
+        'серый' => 'Серый',
+        'коричневый' => 'Коричневый',
+        'бежевый' => 'Бежевый',
+        'красный' => 'Красный',
+        'синий' => 'Синий',
+        'зеленый' => 'Зеленый',
+        'желтый' => 'Желтый',
+        'фиолетовый' => 'Фиолетовый',
+        'оранжевый' => 'Оранжевый',
+        'розовый' => 'Розовый',
+        'золотой' => 'Золотой',
+        'серебряный' => 'Серебряный',
+        'другой' => 'Другой'
+    ];
+}
+
+if (empty($style_options)) {
+    $style_options = [
+        'классический' => 'Классический',
+        'современный' => 'Современный',
+        'минимализм' => 'Минимализм',
+        'лофт' => 'Лофт',
+        'скандинавский' => 'Скандинавский',
+        'прованс' => 'Прованс',
+        'кантри' => 'Кантри',
+        'винтаж' => 'Винтаж',
+        'арт-деко' => 'Арт-деко',
+        'хай-тек' => 'Хай-тек',
+        'эко' => 'Эко',
+        'индустриальный' => 'Индустриальный',
+        'барокко' => 'Барокко',
+        'ренессанс' => 'Ренессанс',
+        'другой' => 'Другой'
+    ];
+}
+
+if (empty($material_options)) {
+    $material_options = [
+        'дерево' => 'Дерево',
+        'металл' => 'Металл',
+        'стекло' => 'Стекло',
+        'пластик' => 'Пластик',
+        'ткань' => 'Ткань',
+        'кожа' => 'Кожа',
+        'камень' => 'Камень',
+        'керамика' => 'Керамика',
+        'мрамор' => 'Мрамор',
+        'гранит' => 'Гранит',
+        'бетон' => 'Бетон',
+        'бамбук' => 'Бамбук',
+        'ротанг' => 'Ротанг',
+        'винил' => 'Винил',
+        'другой' => 'Другой'
+    ];
+}
+?>
+<?php
+// Функция для генерации опций select
+function generate_select_options($options, $default_text)
+{ ?>
+    <option value=""><?php echo esc_html($default_text); ?></option>
+    <?php foreach ($options as $value => $label): ?>
+        <option value="<?php echo esc_attr($value); ?>"><?php echo esc_html($label); ?></option>
+    <?php endforeach ?>
+<?php } ?>
+
+<?php
+// Функция для получения категорий товара по типу
+function get_category_by_type($category_id, $type, $taxonomy = 'category')
+{
+    $category = get_term($category_id, $taxonomy);
+    if (!$category || is_wp_error($category))
+        return '';
+
+    // Получаем все родительские категории
+    $parent_categories = get_ancestors($category_id, $taxonomy);
+
+    // Ищем родительскую категорию нужного типа
+    foreach ($parent_categories as $parent_id) {
+        $parent = get_term($parent_id, $taxonomy);
+        if ($parent && !is_wp_error($parent) && $parent->slug === $type) {
+            return $category->slug; // Возвращаем слаг дочерней категории
+        }
+    }
+
+    return '';
+}
+get_header();
+?>
+
+<main id="main">
+    <div class="container">
+        <div class="header_block">
+            <h2 class="title">Товары с фильтрацией</h2>
+            <hr class="title__under">
+        </div>
+
+        <div class="block_padding_60"></div>
+
+        <!-- Фильтр категорий -->
+        <!-- 
+        🛠️ ИНСТРУКЦИЯ ПО НАСТРОЙКЕ ФИЛЬТРОВ
+        
+        ВАРИАНТ 1: Стандартные категории WordPress
+        Создайте в WordPress следующие родительские категории:
+        1. "Цвета" (slug: col) с дочерними: Белый, Черный, Серый и т.д.
+        2. "Стили" (slug: style) с дочерними: Классический, Современный и т.д.  
+        3. "Материалы" (slug: materials) с дочерними: Дерево, Металл и т.д.
+        
+        Затем назначьте товары/категории к соответствующим дочерним категориям.
+        -->
+
+        <!-- фильтр по товарам -->
+        <div class="category-filter-wrapper">
+            <div class="category-filter">
+                <h3>Фильтр по товарам:</h3>
+                <div class="filter-controls">
+                    <select id="parent-category-filter" class="filter-select">
+                        <option value="">Все категории</option>
+                        <?php
+                        // Получаем все категории одним запросом
+                        $all_categories = get_categories(array(
+                            'orderby' => 'name',
+                            'order' => 'ASC',
+                            'hide_empty' => false
+                        ));
+
+                        foreach ($all_categories as $cat) {
+                            if ($cat->slug !== 'templates' && $cat->parent == 0) {
+                                echo '<option value="' . $cat->term_id . '">' . esc_html($cat->name) . '</option>';
+                            }
+                        }
+                        ?>
+                    </select>
+
+                    <select id="subcategory-filter" class="filter-select" disabled>
+                        <option value="">Выберите подкатегорию</option>
+                    </select>
+
+                    <select id="color-filter" class="filter-select">
+                        <?php echo generate_select_options($color_options, 'Все цвета'); ?>
+                    </select>
+
+                    <select id="style-filter" class="filter-select">
+                        <?php echo generate_select_options($style_options, 'Все стили'); ?>
+                    </select>
+
+                    <select id="material-filter" class="filter-select">
+                        <?php echo generate_select_options($material_options, 'Все материалы'); ?>
+                    </select>
+
+                    <button id="clear-filters" class="clear-filters-btn">Сбросить фильтры</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Список товаров -->
+        <div class="products-container">
+            <div id="products-list" class="products-grid">
+                <?php
+                // Получаем все опубликованные посты, исключая категорию templates
+                $templates_category = get_term_by('slug', 'templates', 'category');
+                $args = array(
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'posts_per_page' => -1,
+                    'orderby' => 'date',
+                    'order' => 'DESC'
+                );
+
+                if ($templates_category && !is_wp_error($templates_category)) {
+                    $args['category__not_in'] = array($templates_category->term_id);
+                }
+
+                $products_query = new WP_Query($args);
+
+                if ($products_query->have_posts()):
+                    while ($products_query->have_posts()):
+                        $products_query->the_post();
+
+                        $post_id = get_the_ID();
+                        $post_title = get_the_title();
+                        $post_excerpt = get_the_excerpt();
+                        $post_link = get_permalink();
+                        $post_date = get_the_date();
+
+                        if (have_rows('flex_page', $post_id)) {
+                            while (have_rows('flex_page', $post_id)) {
+                                the_row();
+                                if (get_row_layout() == 'hero') {
+                                    while (have_rows('hero')) {the_row();
+                                        $image = get_sub_field('back_img');
+                                    }
+                                    $image = get_sub_field('image');
+                                }
+                            }
+                        }
+
+                        // Получаем категории поста
+                        $post_categories = get_the_category($post_id);
+
+                        // Извлекаем атрибуты из категорий поста
+                        $product_color = '';
+                        $product_style = '';
+                        $product_material = '';
+
+                        foreach ($post_categories as $cat) {
+                            $color = get_category_by_type($cat->term_id, 'col');
+                            $style = get_category_by_type($cat->term_id, 'style');
+                            $material = get_category_by_type($cat->term_id, 'materials');
+
+                            if (!empty($color))
+                                $product_color = $color;
+                            if (!empty($style))
+                                $product_style = $style;
+                            if (!empty($material))
+                                $product_material = $material;
+                        }
+
+                        // Fallback к мета-полям поста
+                        if (empty($product_color)) {
+                            $product_color = get_post_meta($post_id, 'col', true) ?: '';
+                        }
+                        if (empty($product_style)) {
+                            $product_style = get_post_meta($post_id, 'style', true) ?: '';
+                        }
+                        if (empty($product_material)) {
+                            $product_material = get_post_meta($post_id, 'materials', true) ?: '';
+                        }
+
+                        // Получаем изображение поста
+                        $thumbnail = get_the_post_thumbnail_url($post_id, 'medium');
+                        if (!$thumbnail) {
+                            $thumbnail = get_template_directory_uri() . '/assets/img/placeholder.jpg';
+                        }
+
+                        // Получаем цену из ACF
+                        $price = get_field('price', $post_id);
+                        $price_value = $price ? floatval($price) : 0;
+                        ?>
+
+                        <div class="product-item" data-post-id="<?php echo $post_id; ?>"
+                            data-color="<?php echo esc_attr(strtolower($product_color)); ?>"
+                            data-style="<?php echo esc_attr(strtolower($product_style)); ?>"
+                            data-material="<?php echo esc_attr(strtolower($product_material)); ?>"
+                            data-price="<?php echo $price_value; ?>"
+                            data-title="<?php echo esc_attr(strtolower($post_title)); ?>">
+
+                            <div class="product-image">
+                                <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($post_title); ?>">
+                            </div>
+
+                            <div class="product-content">
+                                <h3 class="product-title">
+                                    <a href="<?php echo esc_url($post_link); ?>"><?php echo esc_html($post_title); ?></a>
+                                </h3>
+
+                                <?php if ($price): ?>
+                                    <div class="product-price"><?php echo number_format($price_value, 0, ',', ' '); ?> руб.</div>
+                                <?php endif; ?>
+
+                                <?php if ($post_excerpt): ?>
+                                    <div class="product-excerpt"><?php echo wp_trim_words($post_excerpt, 20); ?></div>
+                                <?php endif; ?>
+
+                                <div class="product-meta">
+                                    <span class="product-date"><?php echo esc_html($post_date); ?></span>
+                                </div>
+                            </div>
+
+                            <div class="product-actions">
+                                <a href="<?php echo esc_url($post_link); ?>" class="product-link btn">Подробнее</a>
+                            </div>
+                        </div>
+                    <?php endwhile;
+                    wp_reset_postdata();
+                else: ?>
+                    <div class="no-products">
+                        <p>Товары не найдены.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</main>
+
+<?php get_footer(); ?>
+
+<style>
+    .products-container {
+        margin-top: 40px;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+    }
+
+    .product-item {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .product-item.hidden {
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+    }
+
+    .product-item:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        background: #f5f5f5;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .product-item:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-content {
+        padding: 20px;
+    }
+
+    .product-title {
+        margin: 0 0 10px 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .product-title a {
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .product-title a:hover {
+        color: #c77022;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #c77022;
+        margin-bottom: 10px;
+    }
+
+    .product-excerpt {
+        color: #666;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .product-meta {
+        font-size: 0.8rem;
+        color: #999;
+        margin-bottom: 15px;
+    }
+
+    .product-actions {
+        padding: 0 20px 20px 20px;
+    }
+
+    .product-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #c77022;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: background 0.3s;
+        text-align: center;
+        width: 100%;
+    }
+
+    .product-link:hover {
+        background: #b8651f;
+        color: white;
+    }
+
+    .no-products {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .no-results {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: #666;
+        font-size: 1.1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .products-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .filter-controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .filter-select,
+        .filter-input {
+            min-width: auto;
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const parentFilter = document.getElementById('parent-category-filter');
+        const subcategoryFilter = document.getElementById('subcategory-filter');
+        const colorFilter = document.getElementById('color-filter');
+        const styleFilter = document.getElementById('style-filter');
+        const materialFilter = document.getElementById('material-filter');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        const productItems = document.querySelectorAll('.product-item');
+
+        // Данные о категориях для JavaScript
+        const categoriesData = <?php
+        $js_categories = array();
+        foreach ($all_categories as $cat) {
+            if ($cat->slug !== 'templates') {
+                $js_categories[] = array(
+                    'id' => $cat->term_id,
+                    'name' => $cat->name,
+                    'parent' => $cat->parent
+                );
+            }
+        }
+        echo json_encode($js_categories);
+        ?>;
+
+        // Массив всех фильтров для удобства
+        const filters = [parentFilter, subcategoryFilter, colorFilter, styleFilter, materialFilter];
+
+        // Добавляем обработчики событий для всех фильтров
+        filters.forEach(filter => {
+            filter.addEventListener('change', function () {
+                if (this === parentFilter) {
+                    updateSubcategories();
+                }
+                filterProducts();
+            });
+        });
+
+        // Функция обновления подкатегорий
+        function updateSubcategories() {
+            const parentId = parentFilter.value;
+            subcategoryFilter.innerHTML = '<option value="">Выберите подкатегорию</option>';
+
+            if (parentId) {
+                subcategoryFilter.disabled = false;
+                const subcategories = categoriesData.filter(cat => cat.parent == parentId);
+                subcategories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.id;
+                    option.textContent = cat.name;
+                    subcategoryFilter.appendChild(option);
+                });
+            } else {
+                subcategoryFilter.disabled = true;
+            }
+        }
+
+        // Функция фильтрации товаров
+        function filterProducts() {
+            const filterValues = {
+                parent: parentFilter.value,
+                subcategory: subcategoryFilter.value,
+                color: colorFilter.value.toLowerCase(),
+                style: styleFilter.value.toLowerCase(),
+                material: materialFilter.value.toLowerCase()
+            };
+
+            let visibleCount = 0;
+
+            productItems.forEach(item => {
+                const itemData = {
+                    postId: item.dataset.postId,
+                    color: item.dataset.color.toLowerCase(),
+                    style: item.dataset.style.toLowerCase(),
+                    material: item.dataset.material.toLowerCase()
+                };
+
+                let show = true;
+
+                // Фильтры по атрибутам (цвет, стиль, материал) - обязательные совпадения
+                const attributeFilters = ['color', 'style', 'material'];
+                for (const attr of attributeFilters) {
+                    if (filterValues[attr] && itemData[attr] && itemData[attr] !== '') {
+                        // Точное совпадение для атрибутов
+                        show = itemData[attr] === filterValues[attr];
+                        if (!show) break;
+                    }
+                }
+
+                // Фильтр по категориям (опционально, если выбран)
+                if (show && (filterValues.parent || filterValues.subcategory)) {
+                    // Для фильтрации по категориям нужно получить категории поста
+                    // Поскольку мы не можем легко получить категории поста в JS,
+                    // этот фильтр пока отключен для товаров
+                    // В будущем можно добавить data-category-ids к товарам
+                }
+
+                if (show) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            // Показываем/скрываем сообщение "не найдено"
+            let noResultsMsg = document.querySelector('.no-results');
+
+            if (visibleCount === 0) {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.className = 'no-results';
+                    noResultsMsg.textContent = 'Товары не найдены по заданным критериям';
+                    document.getElementById('products-list').appendChild(noResultsMsg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        }
+
+        // Сброс фильтров
+        clearFiltersBtn.addEventListener('click', function () {
+            // Сбрасываем все фильтры
+            filters.forEach(filter => {
+                filter.value = '';
+            });
+
+            // Сбрасываем подкатегории
+            subcategoryFilter.disabled = true;
+            subcategoryFilter.innerHTML = '<option value="">Выберите подкатегорию</option>';
+
+            // Показываем все товары
+            productItems.forEach(item => {
+                item.classList.remove('hidden');
+            });
+
+            // Удаляем сообщение "не найдено"
+            const noResultsMsg = document.querySelector('.no-results');
+            if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        });
+    });
+</script>

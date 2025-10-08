@@ -1,0 +1,93 @@
+.service 
+    color clr(blck)
+
+h3.title
+    font-weight: 600;
+    font-family: fnt(prim_eb);
+    text-transform: none;
+    font-size: 1.8em;
+    letter-spacing: -0.5px;
+
+.service__btm
+    gap 20px
+    align-items: flex-start
+
+.win
+    background: clr(gr)
+    border-radius: 15px;
+    overflow: hidden
+    color: clr(blck)
+
+.win__img 
+    position: relative;
+    width: 100%;
+    height: 299px;
+
+.win__img img 
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+
+.win__link 
+    display: none;
+    position: absolute;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Объединяем translateX и translateY */
+    border: 2px #fff solid;
+    border-radius: 15px;
+    padding: 15px;
+    background: #fff;
+    transition: all 0.3s ease;
+
+a.win__link:hover
+    color:white;
+    background:clr(sun);
+
+.win:hover .win__link 
+    display: block;
+    opacity: 1;
+    
+.win__text
+    padding: 23px 22px;
+    align-items: unset
+    gap 18px
+    
+.win__text h3
+    font-family: fnt(prim_eb)
+    text-align: left
+    text-transform: capitalize
+
+.win__text_up 
+    display: flex
+    gap: 15px;
+    align-items: center;
+
+.icon_type1
+    background: #fff3cc;
+    border-radius: 7px;
+    font-size: 2em;
+    color: #d98103;
+    align-self: auto;
+
+.win__text p 
+    font-size: .9em;
+    text-align: left;
+    line-height: 1.4em;
+
+.win_btm
+    width 100%
+    text-align: right
+
++below(t)
+    .icon_type1
+        font-size: 1.5em
+
++below(m)
+    .grid_block_two 
+        grid-template-columns: repeat(1, 1fr);
+
++below(sm)
+    .grid_block_two 
+        grid-template-columns: repeat(1, 1fr);

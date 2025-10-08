@@ -1,0 +1,57 @@
+// grid без display grid() 
+grid(num1, gap = false)
+    display: grid
+    grid-template-columns:repeat(num1, 1fr) 
+
+    if gap != false
+        gap:(gap)px
+
+// flex без display flex() 
+flex(which = false, gap = false)
+    display: flex
+    if which != false
+        flex-direction: column
+    if gap != false
+        gap:(gap)px
+
+// определяем  цвета без => var(--main_gold) 
+clr(varName)
+    return var( unquote("--main_" + varName) )
+
+// определяем  шрифты без => var(--font_prim) 
+fnt(varName)
+    return var( unquote("--font_" + varName) )
+
+// определяем  размеры без => var(--size_mobile) 
+size(varName)
+    return var( unquote("--size_" + varName) )
+
+// определяем   градусы => var(--main_gold) 
+deg(varName)
+    return var( unquote("--degree_" + varName))
+
+// для rgba
+clrgb(test, percent)
+    return unquote("rgba(var(--main_hex_" + test + "), " + percent + ")")
+
+objectf(width = 100%, height = null, fit = cover, pos = center)
+    width width 
+    
+    if height is not null
+        height: height
+    else 
+        height: @width
+    
+    object-fit: fit
+    object-position: pos
+
+
+
+
+
+    
+
+
+
+
+

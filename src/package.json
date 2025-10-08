@@ -1,0 +1,26 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "stylus  stylus/start.styl -o ../public_html/wp-content/themes/solnceDesign/assets/css/style.min.css",
+    "build:watch": "stylus -w -c  stylus/start.styl -o ../public_html/wp-content/themes/solnceDesign/assets/css/style.min.css",
+    "build": "webpack --config webpack.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "stylus": "^0.64.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
+    "babel-loader": "^10.0.0",
+    "nib": "^1.2.0",
+    "rupture": "^0.7.1",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
+  }
+}

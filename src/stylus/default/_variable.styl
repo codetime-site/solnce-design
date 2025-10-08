@@ -1,0 +1,98 @@
+colors = {
+    prim: #ffffff,
+    second: #2C2C2C,
+    blck: #1A1A1A,
+    gr: #B7B7B7
+    sun:#FE4F18,
+}
+
+// зазмеры для адаптация 
+// шрифт определяет специальный код внизу 
+fonts = {
+    header: 'discovery'
+    prim: 'manrope'
+    prim_reg: 'manrope_reg'
+    prim_med: 'manrope_med'
+    prim_sb: 'manrope_sb'
+    prim_b: 'manrope_b'
+    prim_eb: 'manrope_eb'
+    prim_l: 'manrope_l'
+    prim_el: 'manrope_el'
+    icon: "fontello" sans-serif
+}
+
+// imgSize = {
+//     small: 16px
+//     medium: 24px
+//     large: 32px
+//     xlarge: 48px
+//     xxlarge: 64px
+// }
+// определяем переменный  
+:root
+    // определяем цвета  
+    for name, color in colors 
+        --main_{name}:color
+        // определение 16 ричных цветов 
+        --main_hex_{name}: unquote(join(", ", red(color) green(color) blue(color)))
+    
+    // определяем шрифт
+    for name, font in fonts 
+        --font_{name}:font
+
+    --speed:05s
+    --degree_sec:135deg
+
+    // imgSize
+    --univImgBlockHeight:482px  
+    --univImgBlockWidth:516px  
+
+
+
+
+// определяем размеры  
+extraLarge = 1400px
+el = extraLarge
+
+large = 1200px
+l = large
+
+desktop = 1024px
+d = desktop
+
+tablet = 768px
+t = tablet
+
+mobile = 568px
+m = mobile
+
+smallMobile = 480px
+sm = smallMobile
+
+extraSmallMobile = 380px
+esm = extraSmallMobile
+
+
++below(d)
+    :root
+        --univImgBlockWidth:440px
+        --univImgBlockHeight:336px  
+        
++below(900px)
+    :root
+        --univImgBlockWidth: 324px;
+        --univImgBlockHeight: 248px;
+
++below(t)
+    :root
+        --univImgBlockWidth: 100%;
+        --univImgBlockHeight:20em
+
+
+// test  
+// body
+// univImgBlockWidth = 516px  
+// univImgBlockHeight = 482px  
+// +below(d)
+//     univImgBlockWidth = 440px
+//     univImgBlockHeight = 336px

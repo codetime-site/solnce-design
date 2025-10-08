@@ -1,0 +1,49 @@
+.rev__block
+    gap 48px
+    display: flex
+    justify-content: center
+    flex-wrap: wrap
+
+
+.rev__win
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    gap 10px
+    border-radius: 15px
+    background: clrgb(gr, .2)
+    padding: 24px
+    max-width: 22em 
+    width 20em
+    min-width: 18em
+
+.subs_bold_down
+    color clr(sun)
+
+.rev__win .subs
+    text-align: left
+    font-size: 1em;
+    line-height: 1.5em;
+
+.rev_icon
+    background: clr(sun)
+    padding: 12px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: clr(prim)
+    font-weight: 900;
+    font-family: fnt(prim_eb);
+
++below(718px)
+    .rev__win
+        width (90%/2)
+
+    .win__text_left .subs_bold
+        font-size: 1em
+    
++below(668px)
+    .rev__win
+        max-width 90%
+        width 80%

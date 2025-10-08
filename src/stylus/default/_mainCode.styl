@@ -1,0 +1,294 @@
+* 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+html 
+    scroll-behavior: smooth;
+
+body 
+    font-family: fnt(prim_reg)
+    background: transparent
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+
+.container 
+    max-width: 100%
+    margin: 0 auto;
+    padding: 0 10em;
+
+// кнопки  
+button
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    align-items: center;
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: none;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background: clr(sun)
+    color: clr(prim);
+
+.btn_sec 
+    padding: 15px 67px;
+    width: max-content;
+    border-radius: 50px;
+
+.btn_win
+    padding: 15px 14px
+    border-radius: 12px
+    width max-content
+    font-size: .8em
+
+.btn 
+    display:block
+
+.btn::before 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+
+.btn:hover::before 
+    left: 100%;
+
+button.testBtn
+    width: 50px;
+    text-align: center;
+    background: unset;
+    color: #fff;
+    box-shadow: unset;
+    text-align: center;
+    padding: 10px;
+
+
+button.hidden
+    transform: scale(1)  rotate(0)
+
+button#btnUpper::before 
+    position: relative;
+    top: 25%;
+    transform: translateY(-50%);
+    padding-top: 25px 
+
+
+button.btnUpper
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    top: 84%;
+    left: 95%;
+    transition: all .5s
+    font-size: 1.8em
+    font-weight: 900
+    padding: unset
+    background: clr(prim)
+    color: clr(second)
+    transform: scale(0) rotate(-660deg)
+    z-index 100
+
+
+// общий код 
+
+img
+    object-fit: fill;
+    max-width: 100%;
+    height: auto;
+
+.grid_block    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+   
+
+.grid_block_two
+    display: grid
+    grid-template-columns: repeat(2,1fr)
+    gap 10px
+    justify-content: center
+    align-items: center;
+
+.grid_block_three
+    display: grid
+    grid-template-columns: repeat(3,1fr)
+    gap 10px
+    justify-content: center
+
+.grid_block_four
+    display: grid
+    grid-template-columns: repeat(4,1fr)
+    gap 10px
+    justify-content: center
+
+.block_padding_20
+    width 100%
+    height: 20px
+
+.block_padding_40
+    width 100%
+    height: 40px
+
+.block_padding_60
+    width 100%
+    height: 60px
+
+.block_padding_80
+    width 100%
+    height: 80px
+
+// для анимация 
+animSubLine()
+    position relative
+
+    &:hover 
+        color clr(prim)
+
+    &::after
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background:  clr(prim);
+        transition: all 0.3s ease;
+    
+    &:hover::after 
+        width: 100%;
+
+.btn-gift:hover 
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+
+// определение секциии цветов темный 1,3,5 
+section:nth-child(2n+1) 
+    background: clr(prim)
+    color clr(blck)
+    
+section:nth-child(2n+1) 
+    .win,
+    .work__win 
+        background: clrgb(gr, .5)
+    
+
+// определение секциии цветов темный 2,4,6 
+section:nth-child(2n)
+    background: clrgb(gr, .5)
+    color clr(blck)
+
+section:nth-child(2n) 
+    .win,
+    .work__win 
+        background: clr(prim)
+
+section 
+    padding: 34px 0;
+
+
+// для флекс 
+.black
+    background: linear-gradient(deg(sec), clr(blck) 0%, clr(blck_2) 100%);
+    
+.some_black
+    background: linear-gradient(deg(sec), clr(blck_3) 0%, clr(blck_2) 100%);
+
+.default
+    background: inherit
+
+
+.title__under
+    border: 1px clr(sun) solid;
+    width: 118px;
+    margin: 0 auto;
+
+div.nonclass .section-header
+    padding-top: 25px 
+
+div.nonclass .maps  
+    padding-bottom: 2em;
+
++below(l)
+    .container 
+        padding: 0 2em;
++below(t)
+
+    .grid_block_two 
+        grid-template-columns: repeat(1, 1fr);
+
+    .grid_block_three 
+        grid-template-columns: repeat(2, 1fr);
+
+    .container 
+        padding: 0 1.5em;
+
+    button.btnUpper 
+        top: 88%;
+        left: 92%;
+
+    .btn_win
+        padding: 18px 14px;
+        font-size: .7em;
+        border-radius: 7px
+        width unset
+
+    .btn_sec 
+        padding: 12px 37px;
+        border-radius: 50px;
+
+
+    button  
+        font-size: .8em
+
+
++below(m)
+
+    .btn_sec 
+        padding: 10px 34px;
+        width: max-content;
+        border-radius: 50px;
+    button.btnUpper 
+        left 86%
+        
+    button.hidden 
+        transform: scale(.86) rotate(0);
+
+    .block_padding_60 
+        height: 30px;
+        
+    .grid_block_three
+        grid-template-columns: repeat(1, 1fr);
+
++below(sm)
+
+    button.btnUpper
+        left: 82%;
+
+    .btn 
+        font-size: 0.9rem;
+
++below(esm)
+    .container
+        padding: 0 .8em
+    
+    .block_padding_40
+        height: 20px;
+
+    button,
+    .btn
+        font-size: .6em
+
+    .btn_win 
+        padding: 10px 14px;
+
+

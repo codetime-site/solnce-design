@@ -1,0 +1,17 @@
+.maps__btm
+    justify-self: center
+    gap 34px 
+
+.maps__btm > div  
+    overflow: hidden;
+    border-radius: 15px;
+    height: 100%
+    // max-height: 252px
+
++below(t)
+    .maps__btm > div  
+        height:  252px
+
++below(esm)
+    .maps__btm > div
+        height: 200px

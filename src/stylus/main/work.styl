@@ -1,0 +1,113 @@
+// section.work
+//     background: clr(gr)
+
+.work__btm
+    display: grid
+    grid-template-columns: repeat(5, 1fr)
+    gap 32px
+    justify-content: center;
+    align-items: flex-start
+
+.work__win
+    border-radius: 15px;
+    display: flex
+    flex-direction: column;
+    gap: 18px;
+    background: clrgb(prim, 1)
+    padding: 25px;
+
+.sub_title
+    font-family: fnt(prim_eb)
+    font-size: 1.1em;
+    text-align: center;
+    line-height: 1.3em;
+
+.sub_subs
+    font-family: fnt(prim_reg);
+    font-weight: 700;
+    text-align: center
+    color clr(second)
+    font-size: .8em
+
+.work__icon
+    text-align: center;
+    padding: 16px;
+    color: clr(prim)
+    border-radius: 15px;
+    position relative
+    overflow: hidden
+
+.work__ungle
+    background:clr(prim);
+    position: absolute;
+    bottom: 0;
+    right: -2px;
+    border-radius: 50%;
+    width: 18px;
+    height: @width;
+    text-align: center;
+    color: clr(blck)
+    font-style: normal;
+    font-weight: 900;
+    font-size: .8em;
+
+
+
+.work__icon
+    background: clr(sun)
+
+// .work__icon.phone-call 
+//     background: #4781f1
+
+// .work__icon.message-bubble1 
+//     background: #3bb861
+
+// .work__icon.online-shopping-cart1 
+//     background: #ab5bf3
+
+// .work__icon.license-document1 
+//     background: #f37530
+
+// .work__icon.ok
+//     background: #f86047
+
+.min_rec
+    background: linear-gradient(80deg, clrgb(sun,.5),clrgb(prim, .5),clrgb(sun,.5))
+    border-radius: 15px;
+    position relative
+    width: 80%;
+
+.min_rec p.subs 
+    padding: 48px 82px 
+    font-size: 1em
+    font-weight: 800
+
+.min_rec::after 
+    content: ""
+    width 20px
+    height: @width
+    position absolute
+    left: 15px
+    top: @left
+    background: clr(sun)
+    border-radius: 50%
+
++below(d) 
+    .work__btm
+        grid-template-columns: repeat(3,1fr)
+
++below(t)
+    .work__btm
+        grid-template-columns: repeat(2,1fr)
+
+    .min_rec
+        width unset
+    
+
++below(m)
+    .work__btm
+        grid-template-columns: repeat(1,1fr)
+        gap 18px
+        
+    .min_rec p.subs 
+        padding: 34px;

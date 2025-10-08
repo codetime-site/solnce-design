@@ -1,0 +1,46 @@
+.project__btm
+    gap: 44px;
+
+.project__btm .win 
+    background: clrgb(gr, .18)
+
+.project__btm .win__top 
+    position relative 
+
+.min__pic 
+    position: absolute;
+    bottom: 0
+    left: 0;
+    width: 100%;
+
+.min__pic .splide__slide
+    opacity: 0.6;
+    transition: opacity 0.3s;
+
+.min__pic .splide__slide.is-active
+    opacity 1 
+
+// .min__pic .splide__slide.is-active
+.splide__track--nav .splide__list .splide__slide.is-active
+    border: 2px white solid
+    border-radius: 5px
+
+
+.project__btm .btn
+    display: inline
+
+.project__btm .win__text
+    gap 6px 
+
+.project__btm p.subs 
+    padding: 1px;
+
+.project__btm p.subs_bold
+    color: clr(sun) 
+
++below(t)
+    .project__btm 
+        gap: 11px;
+
+    .project__btm .win__text
+        padding: 23px 9px; 
