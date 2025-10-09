@@ -1,0 +1,126 @@
+.works-header 
+    text-align: center;
+
+.works-title 
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+
+.works-filter 
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+
+.filter-btn 
+    padding: 12px 24px;
+    background: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+.filter-btn.active 
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-color: #667eea;
+
+.filter-btn:hover 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+.works-gallery 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+
+.work-item 
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+
+.work-item.hidden 
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    display: none;
+
+.work-item:hover 
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+
+.work-image 
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    position: relative;
+
+.work-image img 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+.work-item:hover .work-image img 
+    transform: scale(1.05);
+
+.work-content 
+    padding: 20px;
+
+.work-title 
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+
+
+.work-description 
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+
+.no-works 
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+
++below(t) 
+    .works-title 
+        font-size: 2rem;
+    
+    .works-filter 
+        gap: 10px;
+    
+    .filter-btn 
+        padding: 10px 20px;
+        font-size: 12px;
+    
+    .works-gallery 
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    
+    .work-content 
+        padding: 15px;
+    
+    .work-image 
+        height: 150px;
+    
+
+

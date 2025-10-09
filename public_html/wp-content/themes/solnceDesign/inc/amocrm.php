@@ -13,7 +13,7 @@ if (!defined('AMO_REDIRECT_URI'))
 if (!defined('AMO_RESPONSIBLE_ID'))
     define('AMO_RESPONSIBLE_ID', 12945242); // ID менеджера
 if (!defined('AMO_PIPELINE_ID'))
-    define('AMO_PIPELINE_ID', 123456); // ID вашей воронки
+    define('AMO_PIPELINE_ID', 8849022); // ID вашей воронки
 if (!defined('AMO_STATUS_ID'))
     define('AMO_STATUS_ID', 142); // ID этапа
 /* ===================================================== */
@@ -115,7 +115,7 @@ function amocrm_get_access_token()
 }
 
 /* === 4) Создание сделки + контакт + уведомление === */
-function amocrm_create_lead_with_contact($name, $phone, $product_url = '')
+function amocrm_create_lead_with_contact($name, $phone, $email = '', $city = '', $product_url = '')
 {
     $token = amocrm_get_access_token();
     if (!$token)
@@ -137,7 +137,12 @@ function amocrm_create_lead_with_contact($name, $phone, $product_url = '')
                             "field_code" => "PHONE",
                             "values" => [["value" => $phone, "enum_code" => "MOB"]]
                         ]
-                    ]
+                    ] + ($email ? [
+                        [
+                            "field_code" => "EMAIL",
+                            "values" => [["value" => $email, "enum_code" => "WORK"]]
+                        ]
+                    ] : [])
                 ]
             ]
         ],
@@ -166,7 +171,7 @@ function amocrm_create_lead_with_contact($name, $phone, $product_url = '')
             "element_type" => 2, // 2 = Lead
             "note_type" => "task", // уведомление
             "params" => [
-                "text" => "Сообщение с формы: Имя: $name, Телефон: $phone, Товар: $product_url",
+                "text" => "Сообщение с формы: Имя: $name, Телефон: $phone, Email: $email, Город: $city, Товар: $product_url",
                 "task_type" => 2,
                 "responsible_user_id" => AMO_RESPONSIBLE_ID,
                 "complete_till" => time() + 3600
@@ -191,10 +196,12 @@ add_action('wpcf7_mail_sent', function ($contact_form) {
 
     $name = sanitize_text_field($data['your-name'] ?? $data['names'] ?? $data['name'] ?? '');
     $phone = sanitize_text_field($data['your-phone'] ?? $data['phones'] ?? $data['phone'] ?? '');
+    $email = sanitize_email($data['your-email'] ?? $data['emails'] ?? $data['email'] ?? '');
+    $city = sanitize_text_field($data['your-city'] ?? $data['city'] ?? '');
     $product_url = sanitize_text_field($data['product_url'] ?? ($_SERVER['HTTP_REFERER'] ?? ''));
 
     if ($phone) {
-        $res = amocrm_create_lead_with_contact($name ?: 'Без имени', $phone, $product_url);
+        $res = amocrm_create_lead_with_contact($name ?: 'Без имени', $phone, $email, $city, $product_url);
         if (is_wp_error($res))
             error_log('amoCRM error: ' . $res->get_error_message());
         else

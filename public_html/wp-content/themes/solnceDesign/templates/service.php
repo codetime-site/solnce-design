@@ -1,5 +1,24 @@
 <?php $repeater = "rep_step"; ?>
 
+<?php
+// Обработка формы сервиса для отправки в AmoCRM
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service-phone'])) {
+    $name = sanitize_text_field($_POST['service-name'] ?? '');
+    $phone = sanitize_text_field($_POST['service-phone']);
+    $city = sanitize_text_field($_POST['service-city'] ?? '');
+    $product_url = get_permalink(); // Ссылка на страницу
+
+    if ($phone) {
+        $res = amocrm_create_lead_with_contact($name ?: 'Без имени', $phone, '', $city, $product_url);
+        if (is_wp_error($res)) {
+            error_log('amoCRM error from service: ' . $res->get_error_message());
+        } else {
+            error_log('amoCRM create lead response from service: ' . print_r($res, true));
+        }
+    }
+}
+?>
+
 <section class="section service">
     <div class="container">
         <div class="service__content grid_block">
@@ -22,7 +41,7 @@
                         <div class="win">
                             <div class="win__img">
                                 <?php if ($btn): ?>
-                                    <a href="" class="win__link"><?php echo esc_html($btn); ?></a>
+                                    <button type="button" class="win__link toggle-form" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; transition: transform 0.2s;"><?php echo esc_html($btn); ?></button>
                                 <?php endif; ?>
                                 <?php if ($img): ?>
                                     <img src="<?php echo esc_url($img); ?>" alt="">
@@ -42,6 +61,7 @@
                                     <?php echo esc_html($sub_title); ?>
                                 <?php endif; ?>
                             </div>
+
                         </div>
 
                     <?php endwhile; ?>
@@ -56,21 +76,53 @@
     </div>
 </section>
 
-
+<!-- Modal for service form -->
+<div id="service-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%;">
+        <h3 style="margin-bottom: 20px; color: #333;">Оставить заявку</h3>
+        <form method="post">
+            <div style="margin-bottom:15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Имя:</label>
+                <input type="text" name="service-name" placeholder="Ваше имя" required style="width:100%; padding:12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+            </div>
+            <div style="margin-bottom:15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Телефон:</label>
+                <input type="tel" name="service-phone" placeholder="Ваш телефон" required style="width:100%; padding:12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Город:</label>
+                <input type="text" name="service-city" placeholder="Ваш город" required style="width:100%; padding:12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+            </div>
+            <button type="submit" style="padding:12px 25px; background: linear-gradient(135deg, #667eea, #764ba2); color:white; border:none; border-radius: 25px; font-size: 16px; cursor: pointer;">Отправить</button>
+            <button type="button" id="close-modal" style="padding:12px 25px; background: #f8f9fa; color: #333; border: 1px solid #ddd; border-radius: 25px; font-size: 16px; cursor: pointer; margin-left: 10px;">Отмена</button>
+        </form>
+    </div>
+</div>
 
 <script>
 
     document.querySelectorAll(".win").forEach(function (item) {
         const link = item.querySelector(".win__link"); // Находим .win__link внутри текущего .win__img
-        item.addEventListener("mouseover", function () {
-            if (link) {
-                link.style.display = "block"; // Показываем ссылку
-            }
-        });
-        item.addEventListener("mouseout", function () {
-            if (link) {
-                link.style.display = "none"; // Скрываем ссылку
-            }
-        });
+
+        // Show modal on button click
+        if (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const modal = document.getElementById('service-modal');
+                modal.style.display = 'flex';
+            });
+        }
+    });
+
+    // Close modal
+    document.getElementById('close-modal').addEventListener('click', function () {
+        document.getElementById('service-modal').style.display = 'none';
+    });
+
+    // Close modal on outside click
+    document.getElementById('service-modal').addEventListener('click', function (e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+        }
     });
 </script>

@@ -50,9 +50,18 @@
 
     <?php elseif (get_row_layout() === "postforproduct"): ?>
         <?php get_template_part('templates/galary'); ?>
-        
-        <?php elseif (get_row_layout() === "single_select_materials"): ?>
-            <?php get_template_part('templates/single_select_materials'); ?>
+
+    <?php elseif (get_row_layout() === "constructor"): ?>
+        <?php get_template_part('templates/constructor'); ?>
+
+    <?php /*elseif (get_row_layout() === "catfilter"): ?>
+        <?php get_template_part('templates/catfilter'); */?>
+
+    <?php elseif (get_row_layout() === "portfolio"): ?>
+        <?php get_template_part('templates/portfolio'); ?>
+
+    <?php elseif (get_row_layout() === "single_select_materials"): ?>
+        <?php get_template_part('templates/single_select_materials'); ?>
 
     <?php endif; ?>
 <?php endwhile; ?>

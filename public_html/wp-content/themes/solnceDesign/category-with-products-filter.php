@@ -57,17 +57,23 @@ $category_id = $current_category ? $current_category->term_id : 0;
         <!-- Список товаров/постов -->
         <div class="products-container">
             <div id="products-list" class="products-grid">
-                <?php 
+                <?php
                 $args = array(
                     'post_type' => 'post',
                     'posts_per_page' => -1,
                     'post_status' => 'publish'
                 );
-                
+
                 if ($category_id) {
                     $args['cat'] = $category_id;
                 }
-                
+
+                // Исключаем категорию "Templates"
+                $templates_cat = get_term_by('slug', 'templates', 'category');
+                if ($templates_cat) {
+                    $args['category__not_in'] = array($templates_cat->term_id);
+                }
+
                 $products_query = new WP_Query($args);
                 
                 if ($products_query->have_posts()): 
