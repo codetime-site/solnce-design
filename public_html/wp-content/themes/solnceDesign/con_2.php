@@ -313,62 +313,65 @@
     </div>
 
     <script>
-        // Конфигурация изображений с использованием демо-источников
+        // Конфигурация изображений с использованием WordPress путей
+        var dirUri = "<?php echo get_template_directory_uri(); ?>";
+        console.log(dirUri);
+
         const imageConfig = {
-            base: 'https://images.unsplash.com/photo-1616628188598-6b387a2c97c7?auto=format&fit=crop&w=800&q=80',
+            base: `${dirUri}/images/base_balcony.png`,
             categories: {
                 glazing: {
-                    warm: 'https://images.unsplash.com/photo-1598300054086-ec7f3e384b93?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    cold: 'https://images.unsplash.com/photo-1560184897-90d3f86e7e7a?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    warm: `${dirUri}/images/glazing_warm.png`,
+                    cold: `${dirUri}/images/glazing_cold.png`,
                     none: ''
                 },
                 parapet: {
-                    siding: 'https://images.unsplash.com/photo-1597003727493-6d3b8f1c9301?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    profile: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    plastic: 'https://images.unsplash.com/photo-1616047007936-4c7a6289323e?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    siding: `${dirUri}/images/parapet_siding.png`,
+                    profile: `${dirUri}/images/parapet_profile.png`,
+                    plastic: '',
                     none: ''
                 },
                 walls: {
-                    gypsum: 'https://images.unsplash.com/photo-1595526114035-6f740d1a28a4?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    pvc: 'https://images.unsplash.com/photo-1616047007936-4c7a6289323e?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    lining: 'https://images.unsplash.com/photo-1598928506311-c55ded3f3d47?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    paint: 'https://images.unsplash.com/photo-1562113530-57ba467cea38?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    gypsum: `${dirUri}/images/walls_gypsum.png`,
+                    pvc: `${dirUri}/images/walls_pvc.png`,
+                    lining: `${dirUri}/images/walls_lining.png`,
+                    paint: '',
                     none: ''
                 },
                 floor: {
-                    laminate: 'https://images.unsplash.com/photo-1598300053727-df6f5a7a7cb0?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    tile: 'https://images.unsplash.com/photo-1587202372616-0137b1c4bba6?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    linoleum: 'https://images.unsplash.com/photo-1600522327918-9023b2b4df94?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    carpet: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    laminate: `${dirUri}/images/floor_laminate.png`,
+                    tile: `${dirUri}/images/floor_tile.png`,
+                    linoleum: `${dirUri}/images/floor_linolium.png`,
+                    carpet: `${dirUri}/images/floor_carpet.png`,
                     none: ''
                 },
                 ceiling: {
-                    stretch: 'https://images.unsplash.com/photo-1565183928294-7d21b36c9c24?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    gypsum: 'https://images.unsplash.com/photo-1595526114035-6f740d1a28a4?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    panels: 'https://images.unsplash.com/photo-1616047007936-4c7a6289323e?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    stretch: '',
+                    gypsum: '',
+                    panels: '',
                     none: ''
                 },
                 furniture: {
-                    wardrobe: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118b?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    dresser: 'https://images.unsplash.com/photo-1601043564917-02e2b26f4f8c?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    table: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    shelves: 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    wardrobe: `${dirUri}/images/cabinet_wardrobe.png`,
+                    dresser: `${dirUri}/images/cabinet_coupe.png`,
+                    table: '',
+                    shelves: '',
                     none: ''
                 },
                 insulation: {
-                    full: '',
+                    full: `${dirUri}/images/insulation_standard.png`,
                     partial: '',
                     none: ''
                 },
                 lighting: {
-                    ceiling: 'https://images.unsplash.com/photo-1524634126442-357e0eac3c14?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    wall: 'https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    led: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    ceiling: `${dirUri}/images/lighting_ceiling.png`,
+                    wall: `${dirUri}/images/lighting_wall.png`,
+                    led: '',
                     none: ''
                 },
                 decor: {
-                    plants: 'https://images.unsplash.com/photo-1493957988430-a5f2e15f39a3?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
-                    curtains: 'https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=800&q=80&blend=FFFFFF&blend-alpha=30',
+                    plants: '',
+                    curtains: '',
                     none: ''
                 }
             }
