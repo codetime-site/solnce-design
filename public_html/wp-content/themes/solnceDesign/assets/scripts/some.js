@@ -3,8 +3,32 @@ document.addEventListener("DOMContentLoaded", () => {
     startSplide();
     startMaps();
     mobileMenu();
+    refreshPortfolio()
 });
 
+
+ function refreshPortfolio() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const workItems = document.querySelectorAll('.work-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Сброс активного состояния
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+
+            const filterValue = this.dataset.filter;
+
+            workItems.forEach(item => {
+                if (filterValue == 'all' || item.dataset.category === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+};
 
 function startMaps() {
     if (typeof mapUrl1 !== 'undefined' && document.getElementById('map1')) {
