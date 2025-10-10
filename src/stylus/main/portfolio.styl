@@ -15,22 +15,26 @@
 
 .filter-btn 
     padding: 12px 24px;
-    background: #f8f9fa;
+    background: #777f87;
     border: 2px solid #ddd;
-    border-radius: 25px;
+    border-radius: 38px 0;
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
     transition: all 0.3s ease;
 
-.filter-btn.active 
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border-color: #667eea;
-
 .filter-btn:hover 
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+.filter-btn.active 
+    background: linear-gradient(135deg, #afa395, #fe4f18);
+    // transition all .3s
+    color: clr(prim);
+    
+
+// .filter-btn.active:hover
+
 
 .works-gallery 
     display: grid;
