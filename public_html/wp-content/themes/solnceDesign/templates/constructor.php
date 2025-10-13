@@ -87,7 +87,7 @@
     const roomConfig = {
         livingroom: {
             name: 'Гостиная',
-            background: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
+            background: 'http://solnce-design.ru/wp-content/uploads/2025/10/gest.jpg',
             categories: ['furniture', 'decor', 'chair', 'ceiling'],
             zones: {
                 furniture: { bottom: '50px', left: '180px', width: '200px', height: '150px' },
@@ -98,7 +98,7 @@
         },
         kitchen: {
             name: 'Кухня',
-            background: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80',
+            background: 'http://solnce-design.ru/wp-content/uploads/2025/10/kuhnya1con.jpg',
             categories: ['furniture', 'chair', 'ceiling'], // декор скрыт
             zones: {
                 furniture: { bottom: '40px', left: '200px', width: '180px', height: '140px' },
@@ -108,7 +108,7 @@
         },
         bedroom: {
             name: 'Спальня',
-            background: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
+            background: 'http://solnce-design.ru/wp-content/uploads/2025/10/bedroom.jpg',
             categories: ['furniture', 'decor', 'ceiling'],
             zones: {
                 furniture: { bottom: '40px', left: '100px', width: '220px', height: '160px' },

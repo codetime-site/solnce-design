@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
- function refreshPortfolio() {
+function refreshPortfolio() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const workItems = document.querySelectorAll('.work-item');
 
@@ -63,6 +63,8 @@ function adjustMainPadding() {
     }
 }
 
+
+
 function startSplide() {
     const options = {
         rewind: true,
@@ -112,7 +114,24 @@ function startSplide() {
         mainSlider.sync(thumbnailSlider);
         mainSlider.mount();
         thumbnailSlider.mount();
+
     });
+
+    const spLide = new Splide('.parent_cat__contant', {
+        autoplay: true,
+        interval: 1000,
+        perPage: 3,
+        focus: 'center',
+        perMove: 2,
+        arrows: false,
+        pagination: false,
+        resetProgress: true,
+        rewind: true,
+        rewindSpeed: 1000,
+
+    });
+    spLide.mount();
+
 
 }
 

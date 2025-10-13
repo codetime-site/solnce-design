@@ -4,6 +4,7 @@ $title = get_sub_field('title');
 $sub_title = get_sub_field('sub_title');
 $color = get_sub_field('color');
 $sub_color = get_sub_field('color_sub');
+
 ?>
 
 
@@ -25,6 +26,7 @@ $sub_color = get_sub_field('color_sub');
         <?php if ($title): ?>
             <h2 class="title"><?php echo esc_html($title) ?></h2>
             <hr class="title__under">
+            <div class="block_padding_20"></div>
         <?php endif; ?>
     </div>
     <?php if ($sub_title): ?>

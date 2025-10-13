@@ -10,7 +10,8 @@ $arr = [];
             <div class="block_padding_60"></div>
             <div class="project__btm grid_block_three">
                 <?php if (have_rows($repeater)): ?>
-                    <?php while (have_rows($repeater)): the_row(); ?>
+                    <?php while (have_rows($repeater)):
+                        the_row(); ?>
                         <?php
                         $image = get_sub_field('img'); // Получаем галерею изображений
                         $title = get_sub_field('title');
@@ -23,7 +24,6 @@ $arr = [];
                         $btn_link = get_sub_field('btn_link');
                         $index = get_row_index(); // Уникальный индекс для слайдера
                         $arr = $index;
-                        
                         ?>
 
                         <div class="win windows__project">

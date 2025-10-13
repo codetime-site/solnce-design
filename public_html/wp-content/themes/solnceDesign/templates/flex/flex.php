@@ -1,5 +1,5 @@
-<?php while (have_rows("flex_page")):
-    the_row(); ?>
+<?php while (have_rows("flex_page")):the_row(); ?>
+
     <?php if (get_row_layout() === "hero"): ?>
         <?php get_template_part('templates/hero'); ?>
 
@@ -54,14 +54,14 @@
     <?php elseif (get_row_layout() === "constructor"): ?>
         <?php get_template_part('templates/constructor'); ?>
 
-    <?php /*elseif (get_row_layout() === "catfilter"): ?>
-        <?php get_template_part('templates/catfilter'); */?>
-
     <?php elseif (get_row_layout() === "portfolio"): ?>
         <?php get_template_part('templates/portfolio'); ?>
 
     <?php elseif (get_row_layout() === "single_select_materials"): ?>
         <?php get_template_part('templates/single_select_materials'); ?>
+
+    <?php elseif (get_row_layout() === "parent_cat"): ?>
+        <?php get_template_part('templates/parent_cat'); ?>
 
     <?php endif; ?>
 <?php endwhile; ?>
