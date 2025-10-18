@@ -264,7 +264,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                                     if ($images) {
                                         // Если back_img - массив изображений, берем первое
                                         if (is_array($images) && !empty($images)) {
-                                            $image = $images[0];
+                                            $image = $images['sizes']['thumbnail'];
                                         } else {
                                             $image = $images;
                                         }
