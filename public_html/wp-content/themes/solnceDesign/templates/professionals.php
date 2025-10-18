@@ -16,7 +16,7 @@
                                 <!-- <div class="prof__win"> -->
                                 <?php if ($img): ?>
                                     <div class="prof__img">
-                                        <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($name); ?>">
+                                        <img src="<?php echo esc_url($img['sizes']["thumbnail"]); ?>" alt="<?php echo esc_attr($name); ?>">
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($skils && $name): ?>
