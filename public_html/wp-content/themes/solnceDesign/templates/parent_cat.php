@@ -13,7 +13,7 @@
                             <li class="splide__slide">
                                 <a href="<?php echo esc_url($link); ?>" class="card">
                                     <div class="card__image-wrapper">
-                                        <img src="<?php echo esc_url($imgs); ?>" alt="Изображение 1" class="card__image">
+                                        <img src="<?php echo esc_url($imgs['sizes']['thumbnail']); ?>" alt="Изображение 1" class="card__image">
                                     </div>
                                     <h3 class="card__title"><?php echo esc_html($titles); ?></h3>
                                 </a>
