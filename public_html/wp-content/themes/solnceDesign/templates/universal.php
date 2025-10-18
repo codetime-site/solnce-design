@@ -46,18 +46,14 @@
                         </div>
                     <?php endif; ?>
                 <?php elseif ($logic == "with_forms"): ?>
-                    <!-- <form action="" class="form">
-                        <input type="text" id="names" name="names" placeholder="Ваше имя" required>
-                        <input type="tel" id="phones" name="phones" placeholder="Телефон" required>
-                        <button type="submit" class="btn_win">Оставить заявку</button>
-                    </form> -->
+  
                     <?php echo do_shortcode('[contact-form-7 id="7b62910" title="universal"]'); ?>
                 <?php endif; ?>
             </div>
 
             <div class="universal__img">
                 <?php if ($img): ?>
-                    <div class="img_block" style="background-image:url(<?php echo esc_url($img); ?>)">
+                    <div class="img_block" style="background-image:url(<?php echo esc_url($img["sizes"]['medium_large']); ?>)">
                         <?php /*?>
                        <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_html($rep_list_title); ?>">
                        <?php */ ?>
