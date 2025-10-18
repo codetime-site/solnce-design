@@ -13,7 +13,6 @@
                             <?php $skils = get_sub_field("skils"); ?>
                             <?php $name = get_sub_field("name"); ?>
                             <li class="splide__slide prof__win">
-                                <!-- <div class="prof__win"> -->
                                 <?php if ($img): ?>
                                     <div class="prof__img">
                                         <img src="<?php echo esc_url($img['sizes']["thumbnail"]); ?>" alt="<?php echo esc_attr($name); ?>">
@@ -25,7 +24,6 @@
                                         <p class="subs_bold"><?php echo esc_html($name); ?></p>
                                     </div>
                                 <?php endif; ?>
-                                <!-- </div> -->
                             </li>
                         <?php endwhile; ?>
                     <?php endif; ?>
