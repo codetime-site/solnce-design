@@ -2,7 +2,7 @@
 <section class="hero section" id="hero">
     <?php if ($img): ?>
         <div class="hero__backImg">
-            <img src="<?php echo esc_url($img) ?>" alt="background image">
+            <img src="<?php echo esc_url($img['sizes']['large']) ?>" alt="background image">
         </div>
     <?php endif; ?>
     <div class="container">
