@@ -32,10 +32,10 @@ $arr = [];
                                     <div class="splide__track">
                                         <ul class="splide__list">
                                             <?php if (is_array($image) && !empty($image)): ?>
-                                                <?php foreach ($image as $image1): ?>
+                                                <?php foreach ($image as $images): ?>
                                                     <li class="splide__slide">
                                                         <div class="win__img">
-                                                            <img src="<?php echo esc_url($image1); ?>" alt="">
+                                                            <img src="<?php echo esc_url($images['sizes']['large']); ?>" alt="">
                                                         </div>
                                                     </li>
                                                 <?php endforeach; ?>
@@ -56,9 +56,9 @@ $arr = [];
                                         <div class="splide__track">
                                             <ul class="splide__list">
                                                 <?php if (is_array($image) && !empty($image)): ?>
-                                                    <?php foreach ($image as $image1): ?>
+                                                    <?php foreach ($image as $images): ?>
                                                         <li class="splide__slide">
-                                                            <img src="<?php echo esc_url($image1); ?>" alt="">
+                                                            <img src="<?php echo esc_url($images['sizes']['thumbnail']); ?>" alt="">
                                                         </li>
                                                     <?php endforeach; ?>
                                                 <?php endif; ?>
