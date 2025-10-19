@@ -232,7 +232,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                 $args = array(
                     'post_type' => 'post',
                     'post_status' => 'publish',
-                    'posts_per_page' => 30,
+                    'posts_per_page' => -1,
                     'orderby' => 'date',
                     'order' => 'DESC'
                 );
@@ -364,13 +364,13 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
 
                     <div class="pagination">
-                        <?php
+                        <?php/*
                         echo paginate_links([
                             'total' => $products_query->max_num_pages,
                             'current' => $paged,
                             'prev_text' => '&laquo; Назад',
                             'next_text' => 'Вперёд &raquo;',
-                        ]);
+                        ]);*/
                         ?>
                     </div>
 
@@ -545,3 +545,21 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
     });
 </script>
 <?php get_footer(); ?>
+<!-- 
+<style>
+    .pagination {
+        background: red;
+        padding: 15px;
+        display: flex;
+        gap: 14px;
+    }
+
+    a.prev.page-numbers {
+        background: #3d1cb9;
+        color: white;
+    }
+
+    a.next.page-numbers {
+        background: green;
+    }
+</style> -->
