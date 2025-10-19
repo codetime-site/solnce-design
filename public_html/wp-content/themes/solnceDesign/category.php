@@ -1,4 +1,4 @@
-<?php get_header();?>
+<?php get_header(); ?>
 
 <?php
 //  Template Name: catalog
@@ -223,6 +223,10 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
         <div class="products-container">
             <div id="products-list" class="products-grid">
                 <?php
+
+                // опеределенеи текуший страниецу 
+                $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
                 // Получаем все опубликованные посты, исключая категорию templates
                 $templates_category = get_term_by('slug', 'templates', 'category');
                 $args = array(
@@ -240,7 +244,8 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                 $products_query = new WP_Query($args);
 
                 if ($products_query->have_posts()):
-                    while ($products_query->have_posts()): $products_query->the_post();
+                    while ($products_query->have_posts()):
+                        $products_query->the_post();
 
                         $post_id = get_the_ID();
                         $post_title = get_the_title();
@@ -250,10 +255,11 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
                         $image = '';
                         if (have_rows('flex_page', $post_id)) {
-                            while (have_rows('flex_page', $post_id)) { the_row();
+                            while (have_rows('flex_page', $post_id)) {
+                                the_row();
                                 if (get_row_layout() == 'hero') {
                                     $images = get_sub_field('back_img');
-                                    $class_name = get_sub_field('smallbig') ? "hero__backImg_light" : null ;
+                                    $class_name = get_sub_field('smallbig') ? "hero__backImg_light" : null;
                                     $class_color = get_sub_field('catalog_color') ?: null;
 
                                     if ($images) {
@@ -327,7 +333,8 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                             data-price="<?php echo $price_value; ?>"
                             data-title="<?php echo esc_attr(strtolower($post_title)); ?>">
 
-                            <div class="product-image <?php echo esc_attr($class_name)?>"<?php if($class_color):?> style="background: <?php echo $class_color;?>;" <?php endif?>">
+                            <div class="product-image <?php echo esc_attr($class_name) ?>" <?php if ($class_color): ?>
+                                    style="background: <?php echo $class_color; ?>;" <?php endif ?>">
                                 <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($post_title); ?>">
                             </div>
 
@@ -353,8 +360,21 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                                 <a href="<?php echo esc_url($post_link); ?>" class="product-link btn">Подробнее</a>
                             </div>
                         </div>
-                    <?php endwhile;
-                    wp_reset_postdata();
+                    <?php endwhile ?>
+
+
+                    <div class="pagination">
+                        <?php
+                        echo paginate_links([
+                            'total' => $products_query->max_num_pages,
+                            'current' => $paged,
+                            'prev_text' => '&laquo; Назад',
+                            'next_text' => 'Вперёд &raquo;',
+                        ]);
+                        ?>
+                    </div>
+
+                    <?php wp_reset_postdata();
                 else: ?>
                     <div class="no-products">
                         <p>Товары не найдены.</p>
@@ -524,4 +544,4 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
         });
     });
 </script>
-<?php get_footer();?>
+<?php get_footer(); ?>
