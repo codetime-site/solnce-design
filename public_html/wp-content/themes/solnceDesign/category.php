@@ -204,9 +204,9 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                         ?>
                     </select>
 
-                    <select id="subcategory-filter" class="filter-select" disabled>
+                    <!-- <select id="subcategory-filter" class="filter-select" disabled>
                         <option value="">Выберите подкатегорию</option>
-                    </select>
+                    </select> -->
 
                     <select id="color-filter" class="filter-select">
                         <?php echo generate_select_options($color_options, 'Все цвета'); ?>
@@ -234,7 +234,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                 $args = array(
                     'post_type' => 'post',
                     'post_status' => 'publish',
-                    'posts_per_page' => 12,
+                    'posts_per_page' => 30,
                     'orderby' => 'date',
                     'order' => 'DESC'
                 );
