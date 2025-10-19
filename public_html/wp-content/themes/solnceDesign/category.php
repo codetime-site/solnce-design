@@ -43,7 +43,6 @@ function get_child_terms($parent_slug, $taxonomy = 'category')
     if (!$parent_term) {
         return [];
     }
-
     $child_terms = get_terms(array(
         'taxonomy' => $taxonomy,
         'orderby' => 'name',
@@ -51,19 +50,14 @@ function get_child_terms($parent_slug, $taxonomy = 'category')
         'hide_empty' => false,
         'parent' => $parent_term->term_id
     ));
-
     $options = [];
     if (!is_wp_error($child_terms)) {
         foreach ($child_terms as $term) {
             $options[$term->slug] = $term->name;
         }
     }
-
     return $options;
 }
-
-
-
 
 // Если категории не найдены, используем fallback значения
 if (empty($color_options)) {
