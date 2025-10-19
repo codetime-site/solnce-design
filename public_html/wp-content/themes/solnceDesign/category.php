@@ -198,9 +198,9 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                         ?>
                     </select>
 
-                    <!-- <select id="subcategory-filter" class="filter-select" disabled>
+                    <select id="subcategory-filter" class="filter-select" disabled style="display:none">
                         <option value="">Выберите подкатегорию</option>
-                    </select> -->
+                    </select>
 
                     <select id="color-filter" class="filter-select">
                         <?php echo generate_select_options($color_options, 'Все цвета'); ?>
