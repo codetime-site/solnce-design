@@ -79,7 +79,7 @@
     transition: all 0.3s ease;
     opacity: 1;
     transform: translateY(0);
-
+    padding: 27px;
 
 .product-item.hidden 
     opacity: 0;
@@ -87,11 +87,9 @@
     pointer-events: none;
     display: none;
 
-
 .product-item:hover 
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgb(222 100 52);
-
 
 .product-image 
     width: 100%;
@@ -99,14 +97,15 @@
     overflow: hidden;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     position: relative;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 .product-image img 
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
-
 
 .product-item:hover .product-image img 
     transform: scale(1.05);
@@ -115,23 +114,19 @@
 .product-content 
     padding: 20px;
 
-
 .product-title 
     font-size: 1em;
     font-weight: 600;
     color: clr(blck)
     line-height: 1.2em;
 
-
 .product-title a 
     color: #333;
     text-decoration: none;
     transition: color 0.3s;
 
-
 .product-title a:hover 
     color: #667eea;
-
 
 .product-price 
     font-size: 1.1rem;
@@ -143,28 +138,22 @@
     padding: 5px 10px;
     border-radius: 20px;
 
-
 .product-excerpt 
     color: #666;
     font-size: 0.9rem;
     line-height: 1.5;
     margin-bottom: 15px;
 
-
 .product-meta 
     font-size: 0.8rem;
     color: #999;
     margin-bottom: 15px;
 
-
 .product-actions 
     text-align: center;
 
-
 .product-link 
     display: inline-block;
-    padding: 12px 58px;
-    background: linear-gradient(218deg, #f15d33, #a77436);
     color: clr(prim)
     text-decoration: none;
     border-radius: 7px;
@@ -172,12 +161,13 @@
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
-
+    background: #fe4f18;
+    border-radius: 31px 0;
+    padding: 11px 42px;
 
 .product-link:hover 
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-
 
 .no-products, .no-results 
     grid-column: 1 / -1;
@@ -189,7 +179,6 @@
     border-radius: 15px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     font-size: 1.1rem;
-
 
 +below(t) 
     .title 

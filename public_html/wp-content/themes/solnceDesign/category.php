@@ -234,7 +234,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                 $args = array(
                     'post_type' => 'post',
                     'post_status' => 'publish',
-                    'posts_per_page' => -1,
+                    'posts_per_page' => 12,
                     'orderby' => 'date',
                     'order' => 'DESC'
                 );
@@ -246,8 +246,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                 $products_query = new WP_Query($args);
 
                 if ($products_query->have_posts()):
-                    while ($products_query->have_posts()):
-                        $products_query->the_post();
+                    while ($products_query->have_posts()): $products_query->the_post();
 
                         $post_id = get_the_ID();
                         $post_title = get_the_title();
@@ -257,14 +256,16 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
                         $image = '';
                         if (have_rows('flex_page', $post_id)) {
-                            while (have_rows('flex_page', $post_id)) {
-                                the_row();
+                            while (have_rows('flex_page', $post_id)) { the_row();
                                 if (get_row_layout() == 'hero') {
                                     $images = get_sub_field('back_img');
+                                    $class_name = get_sub_field('smallbig') ? "hero__backImg_light" : null ;
+                                    $class_color = get_sub_field('catalog_color') ?: null;
+
                                     if ($images) {
                                         // Если back_img - массив изображений, берем первое
                                         if (is_array($images) && !empty($images)) {
-                                            $image = $images['sizes']['thumbnail'];
+                                            $image = $images['sizes']['medium'];
                                         } else {
                                             $image = $images;
                                         }
@@ -332,7 +333,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                             data-price="<?php echo $price_value; ?>"
                             data-title="<?php echo esc_attr(strtolower($post_title)); ?>">
 
-                            <div class="product-image">
+                            <div class="product-image <?php echo esc_attr($class_name)?>"<?php if($class_color):?> style="background: <?php echo $class_color;?>;" <?php endif?>">
                                 <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($post_title); ?>">
                             </div>
 
