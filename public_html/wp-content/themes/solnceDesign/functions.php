@@ -61,3 +61,5 @@ add_action('wpcf7_mail_sent', function($contact_form){
 // cir_to_lat  for portfolio
 
 get_template_part('inc/cir_to_lat');
+get_template_part('test_amo_crem/send_hello');
+                        
