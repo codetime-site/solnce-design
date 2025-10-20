@@ -9,3 +9,8 @@
         </div>
     </div>
 </section>
+
+<?php 
+// var_dump($contact_form->id());
+
+?>
