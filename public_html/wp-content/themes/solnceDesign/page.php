@@ -3,7 +3,8 @@
     <?php if (get_the_content()): ?>
         <div><?php the_content(); ?></div>
     <?php endif; ?>
-    <?php if (have_rows("flex_page")): ?>
+    <?php if (have_rows("flex_page")): echo __DIR__; ?>
+
         <?php get_template_part("templates/flex/flex"); ?>
     <?php endif; ?>
 </main>
