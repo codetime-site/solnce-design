@@ -23,18 +23,18 @@ if ($layout) {
 $btn = get_sub_field('btn');
 ?>
 
-<?php //if ($layout && $layout == "hero"): ?>
+<?php if ($layout && $layout == "hero"): ?>
 <?php if ($btn): ?>
         <button onclick="window.location.href = '#form'" class="btn btn_sec win__link ">
             <?php echo esc_html($btn) ?>
             <i class="fontello-arrows-right-line1"></i>
         </button>
 <?php endif; ?>
-<? php// endif; ?>
+<?php endif; ?>
 
 <?php  get_template_part('templates/logic_section/openForms');?>
 
-<!-- <script>
+ <script>
 
     // document.querySelectorAll(".win").forEach(function (item) {
         const link = document.querySelector(".win__link"); // Находим .win__link внутри текущего .win__img
@@ -60,4 +60,4 @@ $btn = get_sub_field('btn');
             this.style.display = 'none';
         }
     });
-</script> -->
+</script> 

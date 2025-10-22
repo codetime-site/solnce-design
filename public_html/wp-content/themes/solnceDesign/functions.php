@@ -50,7 +50,7 @@ get_template_part('inc/cir_to_lat');
 
 // require_once get_template_directory() . '/test_amo_crem/deepseek_var_1.php';
 
-require_once get_template_directory() . '/test_amo_crem/first_amo.php';
+// require_once get_template_directory() . '/test_amo_crem/first_amo.php';
 
 
 // require_once get_template_directory() . '/test_amo_crem/lesson_1_send_hello_world.php';

@@ -1,22 +1,12 @@
 <?php
-// === Настройки ===
-$subdomain = 'shadoof'; // твой поддомен AmoCRM
-$pipeline_id = 10215146; // ID воронки
-$status_id = 80872342;   // например, "Первичный контакт"
 
-$amo_field_name = 1800461;
-// $amo_field_ = 1800461;
+// get_template_part('test_amo_crem/setting_amo');
 
+// Запуск скрипта в среде WordPress (Рекомендуется, если нужны функции WP
+require_once('../../../../wp-load.php');
 
-// Загружаем токены из файла
-$tokensFile = '/var/www/fastuser/data/www/solnce-design.ru/public_html/amocrm_tokens.json';
-if (!file_exists($tokensFile)) {
-    exit('❌ Файл токенов не найден. Сначала нужно авторизоваться.');
-}
-
-$tokens = json_decode(file_get_contents($tokensFile), true);
-$access_token = $tokens['access_token'];
-
+// настройка 
+require_once get_template_directory() . "/test_amo_crem/setting_amo.php";
 
 // === Данные клиента ===
 $client_name = 'Халил';
@@ -33,11 +23,10 @@ $contactData = [
                 'field_code' => 'PHONE',
                 'values' => [['value' => $client_phone, 'enum_code' => 'WORK']]
             ],
-       
             [
                 'field_code' => 'EMAIL',
                 'values' => [['value' => $client_email, 'enum_code' => 'WORK']]
-            ]         
+            ],
         ]
     ]
 ];
@@ -53,6 +42,9 @@ curl_setopt_array($ch, [
         "Content-Type: application/json"
     ],
 ]);
+
+
+
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
@@ -81,6 +73,26 @@ $leadData = [
         'price' => 15000,
         'status_id' => $status_id,
         'pipeline_id' => $pipeline_id,
+        'custom_fields_values' => [
+            [
+                'field_id' => 1800461, // ID поля "URL"
+                'values' => [
+                    ['value' => $client_name]
+                ]
+            ],
+            [
+                'field_id' => 1800463, // ID поля "phone"
+                'values' => [
+                    ['value' => $client_phone]
+                ]
+            ],
+            [
+                'field_id' => 1800483, // ID поля "link"
+                'values' => [
+                    ['value' => $address] 
+                ]
+            ]
+        ],
         '_embedded' => [
             'contacts' => [
                 ['id' => $contact_id]
@@ -105,8 +117,8 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode === 200 || $httpCode === 201) {
-    // echo "✅ Сделка успешно создана!\n";
+    echo "✅ Сделка успешно создана!\n";
     // print_r(json_decode($response, true));
 } else {
-    // echo "❌ Ошибка при создании сдел";
+    echo "❌ Ошибка при создании сдел";
 }
