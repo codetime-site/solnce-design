@@ -1,6 +1,6 @@
 <?php
 
-// get_template_part('test_amo_crem/setting_amo');
+// разделяй и властвуй  
 
 // Запуск скрипта в среде WordPress (Рекомендуется, если нужны функции WP
 require_once('../../../../wp-load.php');
@@ -8,7 +8,10 @@ require_once('../../../../wp-load.php');
 // настройка 
 require_once get_template_directory() . "/test_amo_crem/setting_amo.php";
 
-// === Данные клиента ===
+
+// === Данные клиента  от contact form 7 ===
+
+
 $client_name = 'Халил';
 $client_phone = '+79998887766';
 $client_email = 'halil@example.com';
