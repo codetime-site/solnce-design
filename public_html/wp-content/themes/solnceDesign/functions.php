@@ -46,11 +46,5 @@ function exclude_templates_category($query)
 get_template_part('inc/cir_to_lat');
 // get_template_part('test_amo_crem/send_hello');
 
-// require_once get_template_directory() . '/test_amo_crem/send_test_message.php';
+// require_once get_template_directory() . '/amoCrm/first_amo.php';
 
-// require_once get_template_directory() . '/test_amo_crem/deepseek_var_1.php';
-
-// require_once get_template_directory() . '/test_amo_crem/first_amo.php';
-
-
-// require_once get_template_directory() . '/test_amo_crem/lesson_1_send_hello_world.php';

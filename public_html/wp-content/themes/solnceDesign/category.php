@@ -154,6 +154,10 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 ?>
 
 <main id="main">
+    <?php if (have_rows("flex_page")): ?>
+        <?php get_template_part("templates/flex/flex"); ?>
+    <?php endif; ?>
+
     <div class="container">
         <div class="header_block">
             <h2 class="title">Товары с фильтрацией</h2>
@@ -364,14 +368,14 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
 
                     <div class="pagination">
-                        <?php/*
+                        <? php/*
                         echo paginate_links([
                             'total' => $products_query->max_num_pages,
                             'current' => $paged,
                             'prev_text' => '&laquo; Назад',
                             'next_text' => 'Вперёд &raquo;',
                         ]);*/
-                        ?>
+                            ?>
                     </div>
 
                     <?php wp_reset_postdata();

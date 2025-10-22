@@ -1,127 +1,87 @@
 <?php
 
-// разделяй и властвуй  
-
+// ✅разделяй и властвуй  
 // Запуск скрипта в среде WordPress (Рекомендуется, если нужны функции WP
 require_once('../../../../wp-load.php');
 
-// настройка 
-require_once get_template_directory() . "/test_amo_crem/setting_amo.php";
 
-
-// === Данные клиента  от contact form 7 ===
-
-
-$client_name = 'Халил';
-$client_phone = '+79998887766';
-$client_email = 'halil@example.com';
-$address = "https://hwllo";
-
-// === ШАГ 1. Создаём контакт ===
-$contactData = [
-    [
-        'name' => $client_name,
-        'custom_fields_values' => [
-            [
-                'field_code' => 'PHONE',
-                'values' => [['value' => $client_phone, 'enum_code' => 'WORK']]
-            ],
-            [
-                'field_code' => 'EMAIL',
-                'values' => [['value' => $client_email, 'enum_code' => 'WORK']]
-            ],
-        ]
-    ]
-];
-
-$ch = curl_init();
-curl_setopt_array($ch, [
-    CURLOPT_URL => "https://{$subdomain}.amocrm.ru/api/v4/contacts",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => json_encode($contactData, JSON_UNESCAPED_UNICODE),
-    CURLOPT_HTTPHEADER => [
-        "Authorization: Bearer {$access_token}",
-        "Content-Type: application/json"
-    ],
-]);
+//     // 🔧 Настройки amoCRM для подключение 
+require_once get_template_directory() . "/amoCrm/setting_amo.php";
+require_once get_template_directory() . "/amoCrm/get_contact_form_date.php";
+require_once get_template_directory() . "/amoCrm/send_contact_form_date.php";
+require_once get_template_directory() . "/amoCrm/creat_leads.php";
 
 
 
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
 
-if ($httpCode !== 200 && $httpCode !== 201) {
-    echo "❌ Ошибка при создании контакта ({$httpCode})\n";
-    print_r(json_decode($response, true));
-    exit;
-}
 
-$contactResponse = json_decode($response, true);
-$contact_id = $contactResponse['_embedded']['contacts'][0]['id'] ?? null;
 
-if (!$contact_id) {
-    echo "⚠️ Не удалось получить ID контакта.\n";
-    print_r($contactResponse);
-    exit;
-}
 
-// echo "✅ Контакт создан, ID: {$contact_id}\n";
+// =======================================
+// 💬 Интеграция Contact Form 7 → amoCRM
+// =======================================
 
-// === ШАГ 2. Создаём сделку и привязываем контакт ===
-$leadData = [
-    [
-        'name' => 'Новая сделка с сайта',
-        'price' => 15000,
-        'status_id' => $status_id,
-        'pipeline_id' => $pipeline_id,
-        'custom_fields_values' => [
-            [
-                'field_id' => 1800461, // ID поля "URL"
-                'values' => [
-                    ['value' => $client_name]
-                ]
-            ],
-            [
-                'field_id' => 1800463, // ID поля "phone"
-                'values' => [
-                    ['value' => $client_phone]
-                ]
-            ],
-            [
-                'field_id' => 1800483, // ID поля "link"
-                'values' => [
-                    ['value' => $address] 
-                ]
-            ]
-        ],
-        '_embedded' => [
-            'contacts' => [
-                ['id' => $contact_id]
-            ]
-        ]
-    ]
-];
+// Подключаем хук Contact Form 7
+// add_action('wpcf7_mail_sent', 'send_selected_cf7_to_amocrm');
 
-$ch = curl_init();
-curl_setopt_array($ch, [
-    CURLOPT_URL => "https://{$subdomain}.amocrm.ru/api/v4/leads",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => json_encode($leadData, JSON_UNESCAPED_UNICODE),
-    CURLOPT_HTTPHEADER => [
-        "Authorization: Bearer {$access_token}",
-        "Content-Type: application/json"
-    ],
-]);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+// function send_selected_cf7_to_amocrm($contact_form)
+// {
+//     // === Данные клиента  от contact form 7 и контактный данный
+//     // require_once get_template_directory() . "/amoCrm/get_contact_form_date.php";
 
-if ($httpCode === 200 || $httpCode === 201) {
-    echo "✅ Сделка успешно создана!\n";
-    // print_r(json_decode($response, true));
-} else {
-    echo "❌ Ошибка при создании сдел";
-}
+//     $allowed_form_id = 337;
+//     $form_id = $contact_form->id();
+//     if ($form_id != $allowed_form_id)
+//         return;
+
+//     // 🔹 Получаем данные формы
+//     $submission = WPCF7_Submission::get_instance();
+//     if (!$submission)
+//         return;
+//     $data = $submission->get_posted_data();
+
+//     $client_name = sanitize_text_field($data['names'] ?? 'Без имени');
+//     $address = sanitize_text_field($data['city'] ?? 'Не указан город');
+//     $client_phone = sanitize_text_field($data['phones'] ?? 'Без телефона');
+
+//     // 🔹 Информация о сайте и странице
+//     $product_name = get_bloginfo('name'); // имя сайта
+//     $page_title = function_exists('get_the_title') ? get_the_title() : 'Страница без названия';
+
+
+
+//     // 🔧 Настройки amoCRM для подключение 
+//     // require_once get_template_directory() . "/amoCrm/setting_amo.php";
+
+//     // === Настройки ===
+//     $subdomain = 'shadoof'; // твой поддомен AmoCRM
+//     $pipeline_id = 6967578; // ID воронки
+//     $status_id = 58548442;   // например, "Первичный контакт"
+//     // $amo_field_name = 1800461; // кастомный поля
+
+//     // Загружаем токены из файла
+//     $tokensFile = '/var/www/fastuser/data/www/solnce-design.ru/public_html/amocrm_tokens.json';
+//     if (!file_exists($tokensFile)) {
+//         exit('❌ Файл токенов не найден. Сначала нужно авторизоваться.');
+//     } else {
+//         echo "✅  Файл токенов найден\n";
+//     }
+
+//     // json_decode() — это встроенная функция PHP, которая
+//     //  используется для преобразования строки, закодированной в 
+//     // формате JSON (JavaScript Object Notation), обратно 
+//     // в нативные структуры данных PHP.
+//     $tokens = json_decode(file_get_contents($tokensFile), true);
+//     $access_token = $tokens['access_token'];
+
+//     // === ШАГ 1. Создаём контакт ===
+//     require_once get_template_directory() . "/amoCrm/send_contact_form_date.php";
+
+//     // === ШАГ 2. Создаём сделку и привязываем контакт ===
+//     // require_once get_template_directory() . "/amoCrm/creat_leads.php";
+// }
+
+
+
+
+

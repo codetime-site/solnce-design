@@ -4,12 +4,14 @@
 $subdomain = 'shadoof'; // твой поддомен AmoCRM
 $pipeline_id = 6967578; // ID воронки
 $status_id = 58548442;   // например, "Первичный контакт"
-$amo_field_name = 1800461; // кастомный поля
+// $amo_field_name = 1800461; // кастомный поля
 
 // Загружаем токены из файла
 $tokensFile = '/var/www/fastuser/data/www/solnce-design.ru/public_html/amocrm_tokens.json';
 if (!file_exists($tokensFile)) {
     exit('❌ Файл токенов не найден. Сначала нужно авторизоваться.');
+}else{
+    echo "✅  Файл токенов найден\n";
 }
 
 // json_decode() — это встроенная функция PHP, которая
