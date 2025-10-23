@@ -15,3 +15,9 @@ set_query_var("acf_title", $title);
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.querySelector('input[name="acf_title"]');
+        if (input) input.value = "<?php echo esc_js($title); ?>";
+    });
+</script>

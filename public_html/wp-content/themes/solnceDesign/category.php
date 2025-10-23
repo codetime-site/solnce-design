@@ -154,9 +154,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 ?>
 
 <main id="main">
-    <?php if (have_rows("flex_page")): ?>
-        <?php get_template_part("templates/flex/flex"); ?>
-    <?php endif; ?>
+
 
     <div class="container">
         <div class="header_block">
@@ -387,6 +385,11 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
             </div>
         </div>
     </div>
+    
+    <?php if (have_rows("flex_page")): ?>
+        <?php get_template_part("templates/flex/flex"); ?>
+    <?php endif; ?>s
+
 </main>
 
 

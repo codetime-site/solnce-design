@@ -1,6 +1,5 @@
 <?php
 
-
 $leadData = [
     [
         'name' => 'Новая сделка с сайта solnce-design',

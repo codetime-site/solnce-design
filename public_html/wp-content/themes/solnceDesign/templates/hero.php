@@ -2,7 +2,11 @@
 $img = get_sub_field('back_img');
 $className = get_sub_field('smallbig') ? "hero__backImg_light" : null;
 $class_color = get_sub_field('catalog_color') ?: null;
+
+
 ?>
+
+
 
 <section class="hero section" id="hero">
     <?php if ($img): ?>

@@ -44,7 +44,10 @@ function exclude_templates_category($query)
 }
 
 get_template_part('inc/cir_to_lat');
-// get_template_part('test_amo_crem/send_hello');
 
-// require_once get_template_directory() . '/amoCrm/first_amo.php';
+// require_once get_template_directory() . '/amoCrm/start_amo.php';
+
+add_action('wpcf7_mail_sent', 'send_selected_cf7_to_amocrm');
+
+require_once get_template_directory() . '/amoCrm_ver_2/start_amo.php';
 

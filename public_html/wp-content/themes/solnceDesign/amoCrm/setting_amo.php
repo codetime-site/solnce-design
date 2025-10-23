@@ -11,7 +11,7 @@ $tokensFile = '/var/www/fastuser/data/www/solnce-design.ru/public_html/amocrm_to
 if (!file_exists($tokensFile)) {
     exit('❌ Файл токенов не найден. Сначала нужно авторизоваться.');
 }else{
-    echo "✅  Файл токенов найден\n";
+    echo "✅  Файл токенов найден и успешно установлен\n";
 }
 
 // json_decode() — это встроенная функция PHP, которая
