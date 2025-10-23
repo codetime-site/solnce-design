@@ -1,20 +1,27 @@
 <?php
 // ContactFormData.php
 
-class ContactFormData {
-    // public $allowed_form_id;
+class ContactFormData
+{
+    public $allowed_form_id;
     public $name;
     public $phone;
     public $email;
     public $address;
     public $site_name;
     public $page_title;
+    public function __construct($allowed_form_id = null)
+    {
+        $this->allowed_form_id = $allowed_form_id;
+    }
 
-    public static function fromContactForm($contact_form) {
-        $allowed_form_id = 337;
+    public static function fromContactForm($contact_form, $allowed_form_id = null)
+    {
+        // $allowed_form_id = 337;
         $form_id = method_exists($contact_form, 'id') ? $contact_form->id() : null;
-        if ($form_id != $allowed_form_id) {
-            throw new Exception('Не тот ID формы (или форма не разрешена)');
+
+        if ($allowed_form_id !== null && $form_id != $allowed_form_id) {
+            throw new Exception("ID формы ($form_id) не совпадает с разрешённым ($allowed_form_id)");
         }
 
         $submission = WPCF7_Submission::get_instance();
