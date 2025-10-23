@@ -1,4 +1,3 @@
-<div class="block_padding_40"></div>
 <?php get_template_part('templates/contact_form') ?>
 <footer class="footer" id="contacts">
     <div class="container">

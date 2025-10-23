@@ -551,6 +551,8 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
         });
     });
 </script>
+
+<div class="block_padding_40"></div>
 <?php get_footer(); ?>
 <!-- 
 <style>
