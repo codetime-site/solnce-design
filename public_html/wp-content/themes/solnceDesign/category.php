@@ -367,12 +367,12 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
                     <div class="pagination">
                         <? php/*
-                        echo paginate_links([
-                            'total' => $products_query->max_num_pages,
-                            'current' => $paged,
-                            'prev_text' => '&laquo; Назад',
-                            'next_text' => 'Вперёд &raquo;',
-                        ]);*/
+                  echo paginate_links([
+                      'total' => $products_query->max_num_pages,
+                      'current' => $paged,
+                      'prev_text' => '&laquo; Назад',
+                      'next_text' => 'Вперёд &raquo;',
+                  ]);*/
                             ?>
                     </div>
 
@@ -385,16 +385,34 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
             </div>
         </div>
     </div>
-    
+
     <?php if (have_rows("flex_page")): ?>
         <?php get_template_part("templates/flex/flex"); ?>
-    <?php endif; ?>s
+    <?php endif; ?>
 
 </main>
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    // Данные о категориях для JavaScript
+
+    const categoriesData = <?php
+    $js_categories = array();
+    foreach ($all_categories as $cat) {
+        if ($cat->slug !== 'templates') {
+            $js_categories[] = array(
+                'id' => $cat->term_id,
+                'name' => $cat->name,
+                'parent' => $cat->parent
+            );
+        }
+    }
+    echo json_encode($js_categories);
+    ?>;
+
+    document.addEventListener("DOMContentLoaded", startCatalogFiltr);
+
+    function startCatalogFiltr() {
         const parentFilter = document.getElementById('parent-category-filter');
         const subcategoryFilter = document.getElementById('subcategory-filter');
         const colorFilter = document.getElementById('color-filter');
@@ -403,20 +421,8 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
         const clearFiltersBtn = document.getElementById('clear-filters');
         const productItems = document.querySelectorAll('.product-item');
 
-        // Данные о категориях для JavaScript
-        const categoriesData = <?php
-        $js_categories = array();
-        foreach ($all_categories as $cat) {
-            if ($cat->slug !== 'templates') {
-                $js_categories[] = array(
-                    'id' => $cat->term_id,
-                    'name' => $cat->name,
-                    'parent' => $cat->parent
-                );
-            }
-        }
-        echo json_encode($js_categories);
-        ?>;
+
+
 
         // Массив всех фильтров для удобства
         const filters = [parentFilter, subcategoryFilter, colorFilter, styleFilter, materialFilter];
@@ -549,26 +555,11 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
                 noResultsMsg.remove();
             }
         });
-    });
-</script>
+    };
 
+
+
+
+</script>
 <div class="block_padding_40"></div>
 <?php get_footer(); ?>
-<!-- 
-<style>
-    .pagination {
-        background: red;
-        padding: 15px;
-        display: flex;
-        gap: 14px;
-    }
-
-    a.prev.page-numbers {
-        background: #3d1cb9;
-        color: white;
-    }
-
-    a.next.page-numbers {
-        background: green;
-    }
-</style> -->

@@ -34,17 +34,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service-phone'])) {
                         the_row(); ?>
                         <?php $title = get_sub_field('title'); ?>
                         <?php $sub_title = get_sub_field('sub_title'); ?>
-                        <?php $img = get_sub_field('img'); ?>
+                        <?php $img = get_sub_field('img');
+                        $images = $img['sizes']['medium_large'];
+                        ?>
                         <?php $btn = get_sub_field('btn'); ?>
                         <?php $icon = get_sub_field('icon'); ?>
+
 
                         <div class="win">
                             <div class="win__img">
                                 <?php if ($btn): ?>
-                                    <button type="button" class="win__link toggle-form" style="padding: 10px 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; transition: transform 0.2s;"><?php echo esc_html($btn); ?></button>
+                                    <!-- <button type="button" class="win__link openModalBtn"></button> -->
+
+                                    <button class="win__link openModalBtn" data-title="<?php echo $title; ?>"
+                                        data-img="<?php echo $img['url']; ?>" data-link="<?php the_permalink(); ?>">
+                                        <?php echo esc_html($btn); ?>
+                                    </button>
                                 <?php endif; ?>
-                                <?php if ($img): ?>
-                                    <img src="<?php echo esc_url($img); ?>" alt="">
+                                <?php if ($images): ?>
+                                    <img src="<?php echo esc_url($images); ?>" alt="">
                                 <?php endif; ?>
                             </div>
 
@@ -76,31 +84,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service-phone'])) {
     </div>
 </section>
 
-<?php  get_template_part('templates/logic_section/openForms');?>
-<script>
-
-    document.querySelectorAll(".win").forEach(function (item) {
-        const link = item.querySelector(".win__link"); // Находим .win__link внутри текущего .win__img
-
-        // Show modal on button click
-        if (link) {
-            link.addEventListener("click", function (e) {
-                e.preventDefault();
-                const modal = document.getElementById('service-modal');
-                modal.style.display = 'flex';
-            });
-        }
-    });
-
-    // Close modal
-    document.getElementById('close-modal').addEventListener('click', function () {
-        document.getElementById('service-modal').style.display = 'none';
-    });
-
-    // Close modal on outside click
-    document.getElementById('service-modal').addEventListener('click', function (e) {
-        if (e.target === this) {
-            this.style.display = 'none';
-        }
-    });
-</script>
+ <?php get_template_part('templates/modal_form'); ?>

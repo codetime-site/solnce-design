@@ -91,8 +91,8 @@ $arr = [];
                                 <?php endif; ?>
                                 <?php if ($btn): ?>
                                     <div class="win_btm">
-                                        <button onclick="window.location.href='<?php echo esc_url($btn_link); ?>'"
-                                            class="btn_win btn"><?php echo esc_html($btn); ?></button>
+                                        <button class="btn_win btn openModalBtn" data-title="<?php the_sub_field('title'); ?>"
+                                            data-link="<?php the_permalink(); ?>"><?php echo esc_html($btn); ?></button>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -100,7 +100,8 @@ $arr = [];
                     <?php endwhile; ?>
                 <?php endif; ?>
             </div>
-            <div class="block_padding_40"></div>
+            <div class=" block_padding_40">
+            </div>
             <div class="block_padding_60"></div>
             <?php get_template_part('templates/logic_section/send_btn'); ?>
         </div>

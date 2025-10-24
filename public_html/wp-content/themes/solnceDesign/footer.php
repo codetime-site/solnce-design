@@ -1,4 +1,5 @@
 <?php get_template_part('templates/contact_form') ?>
+
 <footer class="footer" id="contacts">
     <div class="container">
         <div class="footer__content">

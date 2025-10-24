@@ -42,7 +42,9 @@
                                 <p class="subs_bold"> <?php echo esc_html($rec_title); ?></p>
                             </div>
                             <p class="subs"><?php echo esc_html($rec_sub_title); ?></p>
-                            <button class="btn_win btn"><?php echo esc_html($btn); ?> </button>
+                            <button class="btn_win btn openModalBtn" data-title="<?php the_sub_field('title'); ?>"
+                                data-img="<?php echo $img['url']; ?>"
+                                data-link="<?php the_permalink(); ?>"><?php echo esc_html($btn); ?> </button>
                         </div>
                     <?php endif; ?>
                 <?php elseif ($logic == "with_forms"): ?>
@@ -56,13 +58,11 @@
                     <div class="img_block"
                         style="background-image:url(<?php echo esc_url($img["sizes"]['medium_large']); ?>)">
                         <?php /*?>
-                      <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_html($rep_list_title); ?>">
-                      <?php */ ?>
+                     <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_html($rep_list_title); ?>">
+                     <?php */ ?>
                     </div>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 </section>
-
-

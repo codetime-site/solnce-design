@@ -26,6 +26,18 @@ class LeadService {
                         'values' => [['value' => $data->page_title]]
                     ],
                     [
+                        'field_id' => 1800553, 
+                        'values' => [['value' => $data->page_sub_title]]
+                    ],
+                    [
+                        'field_id' => 1800555, 
+                        'values' => [['value' => $data->page_link]]
+                    ],
+                    [
+                        'field_id' => 1800483, 
+                        'values' => [['value' => $data->product_img]]
+                    ],
+                    [
                         'field_id' => 1800463,
                         'values' => [['value' => $data->phone]]
                     ],

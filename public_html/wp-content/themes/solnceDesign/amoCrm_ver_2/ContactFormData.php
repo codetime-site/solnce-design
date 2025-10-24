@@ -10,6 +10,10 @@ class ContactFormData
     public $address;
     public $site_name;
     public $page_title;
+    public $page_sub_title;
+    public $page_link;
+    public $product_img;
+
     public function __construct($allowed_form_id = null)
     {
         $this->allowed_form_id = $allowed_form_id;
@@ -36,7 +40,10 @@ class ContactFormData
         $obj->phone = sanitize_text_field($data['phones'] ?? '');
         $obj->email = sanitize_email($data['email'] ?? ($data['emails'] ?? ''));
         $obj->address = sanitize_text_field($data['city'] ?? 'Не указан город');
-        $obj->page_title = sanitize_text_field($data['acf_title'] ?? 'footer form in main page');
+        $obj->page_title = sanitize_text_field($data['acf_title'] ?? 'Оставь заявку мы свяжемся');
+        $obj->page_sub_title = sanitize_text_field($data['acf_sub_title'] ?? 'подзаголовок не указан');
+        $obj->page_link = sanitize_text_field($data['acf_link'] ?? 'ссылка страницу не указан');
+        $obj->product_img = sanitize_text_field($data['acf_image'] ?? ' изображение продукта не указано');
         $obj->site_name = get_bloginfo('name');
         // $titles = get_query_var( 'acf_title');
         // $obj->page_title = $titles ?: 'footer form in main page';
