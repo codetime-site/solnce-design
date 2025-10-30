@@ -13,8 +13,9 @@ if (!defined("GET_ACF_TITLE"))
 add_action('wp_enqueue_scripts', "reg_scripts");
 function reg_scripts()
 {
+    wp_enqueue_style('fabric', "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js", [], null);
     // get_template_part('inc/scripts');
-    require_once get_template_directory() . '/inc/scripts.php';
+    require get_template_directory() . '/inc/scripts.php';
 }
 
 // Регистрация меню
@@ -55,6 +56,11 @@ get_template_part('inc/cir_to_lat');
 
 
 require_once get_template_directory() . '/amoCrm_ver_2/start_amo.php';
+
+// require_once get_template_directory() . '/inc/catalog_filter.php';
+
+
+// print('hello');
 
 
 

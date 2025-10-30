@@ -1,427 +1,152 @@
-div.header {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
 
-div.header h1 {
-    color: #333;
-    font-size: 28px;
-    margin-bottom: 10px;
-}
+canvas
+    border 1px solid #ccc
+    border-radius 8px
+    display block
+    margin-top 10px
+    object-fit contain
 
-div.header p {
-    color: #666;
-    font-size: 14px;
-}
+#buttons,
+#elements,
+#ceilings
+    margin-bottom 10px
+    display flex
+    flex-wrap wrap
+    gap 8px
 
-.constructor-container {
-    flex: 1;
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
-}
+#ceilings button
+    background: transparent;
 
-.panel {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    overflow-y: auto;
-    max-height: calc(100vh - 140px);
-}
+#buttons button
+    padding 8px 12px
+    border none
+    border-radius 6px
+    cursor pointer
+    background #2563eb
+    color white
+    transition background 0.2s
 
-.left-panel, .right-panel {
-    flex: 0 0 250px;
-}
+#buttons button.active
+    background #10b981
 
-.center-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
+#buttons button.save
+    background #f59e0b
 
-.scene-container {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    background: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
+#buttons button.reset
+    background #ef4444
 
-.scene-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: all 0.5s ease;
-}
+#elements button
+    width 70px
+    height 70px
+    border none
+    border-radius 10px
+    background-color transparent
+    background-size cover
+    background-position center
+    cursor pointer
+    box-shadow 0 0 5px rgba(0, 0, 0, 0.2)
+    transition transform 0.2s, box-shadow 0.2s
 
-/* Стили для селекторов комнат и категорий */
-.room-selector, .category-selector {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-}
+#elements button:hover
+    transform scale(1.1)
+    box-shadow 0 0 10px rgba(0, 0, 0, 0.4)
 
-.room-button, .category-button {
-    padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid #e0e0e0;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    color: #333;
-    position: relative;
-    z-index: 100;
-    pointer-events: auto;
-}
+#elements button.active
+    outline 3px solid #0078ff
 
-.room-button:hover, .category-button:hover {
-    background: #f5f5f5;
-    border-color: #667eea;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
+#ceilings
+    gap 10px 
+    justify-content center
 
-.room-button.active, .category-button.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-color: #667eea;
-}
+#ceilings button
+    width 80px
+    height 80px
+    border none
+    border-radius 10px
+    background-size cover
+    background-position center
+    box-shadow 0 0 5px rgba(0, 0, 0, 0.3)
+    cursor pointer
+    transition transform 0.2s
 
-.category-button.hidden {
-    display: none;
-}
+#ceilings button:hover
+    transform scale(1.1)
 
-/* Стили для сетки элементов */
-.elements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 15px;
-    padding: 20px 0;
-}
-
-.element-item {
-    background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.element-item:hover {
-    border-color: #667eea;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.element-item.selected {
-    border-color: #667eea;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}
-
-.element-thumbnail {
-    width: 80px;
-    height: 60px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 5px;
-    margin: 0 auto 8px;
-    background-color: #f0f0f0;
-}
-
-.element-name {
-    font-size: 12px;
-    font-weight: 600;
-}
-
-/* Информация о комнате */
-.room-info {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
-    text-align: center;
-}
-
-.room-info h3 {
-    color: #333;
-    margin-bottom: 5px;
-    font-size: 18px;
-}
-
-.room-info p {
-    color: #666;
-    font-size: 14px;
-}
-
-/* Детали элемента */
-.element-details {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    height: fit-content;
-}
-
-.element-details h3 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.element-details p {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.category {
-    margin-bottom: 25px;
-}
-
-.category-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #667eea;
-}
-
-.option-button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 8px;
-    background: #fff;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-    color: #333;
-    text-align: left;
-}
-
-.option-button:hover {
-    background: #f5f5f5;
-    border-color: #667eea;
-    transform: translateX(5px);
-}
-
-.option-button.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-color: #667eea;
-}
-
-.controls {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.control-button {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.control-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18px;
-    color: #666;
-}
-
-@media (max-width: 768px) {
-    .constructor-container {
-        flex-direction: column;
-    }
-
-    .left-panel, .right-panel {
-        flex: none;
-        width: 100%;
-        max-height: 300px;
-    }
-
-    .preview-container {
-        height: 300px;
-    }
-}
+#ceilings button.active
+    outline 3px solid #00bfff
 
 
-/* Стили для зон размещения элементов */
-.zone {
-    position: absolute;
-    pointer-events: none;
-}
+// ======== MOBILE ADAPTIVE ========
+// Для экранов меньше 768px
+@media (max-width: 768px)
+    .container
+        width 100%
+        padding 10px
+        box-sizing border-box
 
-.floor-zone {
-    bottom: 10%;
-    left: 20%;
-    width: 60%;
-    height: 30%;
-    z-index: 10;
-}
+    h2
+        font-size 18px
+        text-align center
+        margin-bottom 12px
 
-.wall-zone {
-    top: 20%;
-    left: 15%;
-    width: 70%;
-    height: 50%;
-    z-index: 8;
-}
+    #buttons
+        flex-direction column
+        align-items center
+        gap 6px
 
-.ceiling-zone {
-    top: 5%;
-    left: 25%;
-    width: 50%;
-    height: 20%;
-    z-index: 12;
-}
+    #buttons button
+        width 100%
+        max-width 250px
+        font-size 14px
+        padding 10px 0
+        border-radius 10px
 
-.window-zone {
-    top: 15%;
-    right: 10%;
-    width: 25%;
-    height: 40%;
-    z-index: 9;
-}
+    #ceilings,
+    #elements
+        justify-content center
+        gap 6px
+        margin-bottom 12px
 
-.zone-element {
-    position: absolute;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
+    #ceilings button,
+    #elements button
+        width 60px
+        height 60px
+        border-radius 8px
+        box-shadow 0 0 3px rgba(0,0,0,0.25)
+        background-size cover
+        background-position center
 
-.fade-in {
-    animation: fadeIn 0.3s ease-in;
-}
+    #elements button:hover,
+    #ceilings button:hover
+        transform none
+        box-shadow 0 0 5px rgba(0,0,0,0.3)
 
-.fade-out {
-    animation: fadeOut 0.3s ease-out;
-}
+    canvas
+        width 100%
+        height auto
+        max-height 400px
+        border-radius 8px
+        object-fit contain
+        margin-top 10px
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
+// ======== EXTRA SMALL PHONES ========
+// Для очень маленьких экранов (до 480px)
+@media (max-width: 480px)
 
-@keyframes fadeOut {
-    from { opacity: 1; transform: scale(1); }
-    to { opacity: 0; transform: scale(0.9); }
-}
+    canvas
+    .canvas-container
+        width 100%; !important
+    h2
+        font-size 16px
 
-/* Отладочные границы зон (можно убрать в продакшене) */
-.zone.debug {
-    border: 2px dashed rgba(255, 0, 0, 0.3);
-    background: rgba(255, 0, 0, 0.1);
-}
+    #buttons button
+        font-size 13px
+        padding 8px 0
 
-/* Стили для формы загрузки фото */
-.photo-upload-form {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    border: 2px solid #667eea;
-}
+    #elements button,
+    #ceilings button
+        width 50px
+        height 50px
 
-.photo-upload-form h3 {
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.photo-upload-form input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 5px;
-}
-
-/* Стили для формы сброса */
-.reset-form {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-}
-
-.reset-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.reset-container h3 {
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.reset-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.reset-button {
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.reset-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.reset-button.danger {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-}
-
-.reset-button.danger:hover {
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-}
+    canvas
+        max-height 300px

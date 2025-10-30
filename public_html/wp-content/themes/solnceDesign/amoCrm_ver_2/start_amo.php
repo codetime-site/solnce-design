@@ -29,6 +29,8 @@ function send_selected_cf7_to_amocrm($contact_form)
         // или ты передаёшь ID товара, чтобы можно было найти его категории
         $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
 
+        // echo "<h1> hello my  sister</h1>";
+
         // --- Проверяем категории ---
         $category_ids = $product_id ? wp_get_post_terms($product_id, 'product_cat', ['fields' => 'ids']) : [];
 

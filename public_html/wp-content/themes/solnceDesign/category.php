@@ -367,12 +367,12 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
                     <div class="pagination">
                         <? php/*
-                  echo paginate_links([
-                      'total' => $products_query->max_num_pages,
-                      'current' => $paged,
-                      'prev_text' => '&laquo; Назад',
-                      'next_text' => 'Вперёд &raquo;',
-                  ]);*/
+                     echo paginate_links([
+                         'total' => $products_query->max_num_pages,
+                         'current' => $paged,
+                         'prev_text' => '&laquo; Назад',
+                         'next_text' => 'Вперёд &raquo;',
+                     ]);*/
                             ?>
                     </div>
 
@@ -386,9 +386,9 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
         </div>
     </div>
 
-    <?php if (have_rows("flex_page")): ?>
-        <?php get_template_part("templates/flex/flex"); ?>
-    <?php endif; ?>
+    <?php /*if (have_rows("flex_page")): ?>
+<?php get_template_part("templates/flex/flex"); ?>
+<?php endif; */ ?>
 
 </main>
 
@@ -409,7 +409,6 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
     }
     echo json_encode($js_categories);
     ?>;
-
     document.addEventListener("DOMContentLoaded", startCatalogFiltr);
 
     function startCatalogFiltr() {
@@ -559,7 +558,7 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
 
 
 
-
+    
 </script>
 <div class="block_padding_40"></div>
 <?php get_footer(); ?>
