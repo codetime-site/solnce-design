@@ -27,7 +27,7 @@ if (!$tokens || !isset($tokens['refresh_token'])) {
 }
 
 if ($currentDate >= $endDate) {
-    file_put_contents($logFile, "⚠️ Срок действия токена истёк ($endDate)\n", FILE_APPEND);
+    file_put_contents($logFile, "⚠️ Срок действия токена истёк ($endDate)\n заходи и поменяй 26 на 27", FILE_APPEND);
     exit;
 }
 

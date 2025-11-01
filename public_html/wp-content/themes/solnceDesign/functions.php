@@ -73,9 +73,16 @@ add_filter('wpcf7_form_tag', function ($tag) {
         return $tag;
     }
 
+
     // Получаем ID текущего поста (страницы/товара)
     $post_id = get_the_ID();
 
+  if (! empty($tag['name']) && $tag['name'] === 'product_id') {
+        $post_id = get_the_ID();
+        if ($post_id) {
+            $tag['values'] = [$post_id];
+        }
+    }
     // Обработаем нужные нам поля по имени
     if ($tag['name'] === 'acf_title') {
         // Используем get_sub_field, т.к. у тебя так работало
@@ -96,9 +103,9 @@ add_filter('wpcf7_form_tag', function ($tag) {
         $post_id = get_the_ID();
 
         // Пытаемся получить изображение из ACF
-   
+
         // $image = get_field('back_img', $post_id) ?: get_field('img', $post_id);
-        $image = get_sub_field('back_img',$post_id) ?: get_field('img',$post_id);
+        $image = get_sub_field('back_img', $post_id) ?: get_field('img', $post_id);
 
         // Преобразуем в URL, если это массив или ID
         if (is_array($image) && isset($image['url'])) {
@@ -114,3 +121,21 @@ add_filter('wpcf7_form_tag', function ($tag) {
 
     return $tag;
 });
+
+
+
+add_action('wp_ajax_upload_canvas', 'upload_canvas');
+add_action('wp_ajax_nopriv_upload_canvas', 'upload_canvas');
+
+function upload_canvas() {
+    if(empty($_FILES['canvas_image'])) wp_send_json_error('No file');
+
+    $file = $_FILES['canvas_image'];
+    $upload = wp_handle_upload($file, ['test_form' => false]);
+
+    if(isset($upload['url'])) {
+        wp_send_json_success(['url' => $upload['url']]);
+    } else {
+        wp_send_json_error('Upload failed');
+    }
+}
