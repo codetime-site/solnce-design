@@ -4,9 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
     startMaps();
     mobileMenu();
     refreshPortfolio();
-    // construct();
     // startModal();
+    // construct();
     // startCatalogFiltr();
+});
+
+window.addEventListener('load', () => {
+    startModal();
 });
 
 function construct() {
@@ -250,7 +254,6 @@ function construct() {
                 btn.addEventListener('click', () => {
                     const obj = objects[item.id];
                     if (!obj) return;
-
                     obj.visible = !obj.visible;
                     btn.classList.toggle('btn-active', obj.visible);
 
@@ -428,6 +431,7 @@ function construct() {
 
 
 function startModal() {
+    console.log('startModal подключен');
     const modal = document.getElementById('myModal');
     const btns = document.querySelectorAll('.openModalBtn');
     const closeBtn = document.querySelector('#myModal .close-btn');

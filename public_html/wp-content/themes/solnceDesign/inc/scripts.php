@@ -3,6 +3,14 @@
 wp_enqueue_style('splide', "https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css", [], null);
 wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js', [], null, true);
 
+wp_enqueue_script('fabric-js', 'https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js', [], null, false);
+wp_enqueue_script('constructor-js', get_template_directory_uri() . '/assets/scripts/construct.js', ['fabric-js'],   time(), true);
+
+// Передаём PHP-данные в JS
+wp_localize_script('constructor-js', 'wpData', [
+    'templateUri' => get_template_directory_uri(),
+    'ajaxUrl'     => admin_url('admin-ajax.php'), // <-- без пробелов!
+]);
 
 // Основные стили
 wp_enqueue_style('default-style', get_template_directory_uri() . '/assets/css/style.min.css', [], filemtime(get_template_directory() . '/assets/css/style.min.css'));

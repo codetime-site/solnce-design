@@ -6,15 +6,10 @@ define('MY_ASSETS', get_template_directory_uri() . '/assets');
 if (!defined("GET_ACF_TITLE"))
     define('GET_ACF_TITLE', 'templates/logic_section/send_title');
 
-
-
-
 // Подключение стилей и скриптов
 add_action('wp_enqueue_scripts', "reg_scripts");
 function reg_scripts()
 {
-    wp_enqueue_style('fabric', "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js", [], null);
-    // get_template_part('inc/scripts');
     require get_template_directory() . '/inc/scripts.php';
 }
 
@@ -27,13 +22,6 @@ function reg_menu()
 
 // хлебный крошка не готова пока 
 get_template_part('inc/breadcrumbs');
-
-// require_once get_template_directory() . '/inc/tag_cf7.php';
-
-// connect amocrm 
-// get_template_part('inc/amocrm');
-
-
 
 // Исключаем категорию "Templates" из всех запросов товаров
 add_action('pre_get_posts', 'exclude_templates_category');
