@@ -1,6 +1,9 @@
 <?php
 $map1 = get_sub_field('maps_1');
 $map2 = get_sub_field('maps_2');
+// set_query_var('maps_1', $map1);
+// set_query_var('maps_2', $map2);
+
 ?>
 <section class="section maps">
     <div class="container">
@@ -20,6 +23,17 @@ $map2 = get_sub_field('maps_2');
 </section>
 
 <script>
+
     const mapUrl1 = <?php echo json_encode($map1); ?>;
     const mapUrl2 = <?php echo json_encode($map2); ?>;
+    document.addEventListener("DOMContentLoaded", startMaps)
+
+    function startMaps() {
+        if (typeof mapUrl1 !== 'undefined' && document.getElementById('map1')) {
+            loadMapScript('map1', mapUrl1);
+        }
+        if (typeof mapUrl2 !== 'undefined' && document.getElementById('map2')) {
+            loadMapScript('map2', mapUrl2);
+        }
+    }
 </script>

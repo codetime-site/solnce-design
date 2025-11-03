@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <?php
-//  Template Name: catalog
+//  Template Name: etette_catalog
 // Функция для получения дочерних категорий из родительской
 function get_child_categories($parent_slug, $taxonomy = 'category')
 {
@@ -12,7 +12,7 @@ function get_child_categories($parent_slug, $taxonomy = 'category')
 
     $child_categories = get_terms(array(
         'taxonomy' => $taxonomy,
-        'orderby' => 'name',
+        'orderby' => 'name',    
         'order' => 'ASC',
         'hide_empty' => false,
         'parent' => $parent_category->term_id
@@ -386,9 +386,9 @@ function get_category_by_type($category_id, $type, $taxonomy = 'category')
         </div>
     </div>
 
-    <?php /*if (have_rows("flex_page")): ?>
+    <?php if (have_rows("flex_page")): ?>
 <?php get_template_part("templates/flex/flex"); ?>
-<?php endif; */ ?>
+<?php endif;  ?>
 
 </main>
 

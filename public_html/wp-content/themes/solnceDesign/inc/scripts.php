@@ -19,5 +19,5 @@ wp_enqueue_style('default-style', get_template_directory_uri() . '/assets/css/st
 
 wp_enqueue_script('some_scripts', get_template_directory_uri() . '/assets/scripts/some.js', [], filemtime(get_template_directory() . '/assets/scripts/some.js'), true);
 
-// Fontello
+
 wp_enqueue_style('fontello', get_template_directory_uri() . '/assets/fonts/fontello/css/fontello.css');

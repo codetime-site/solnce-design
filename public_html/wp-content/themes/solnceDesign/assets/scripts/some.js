@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     adjustMainPadding();
     startSplide();
-    startMaps();
+    // startMaps();
     mobileMenu();
     refreshPortfolio();
     // startModal();
@@ -16,11 +16,6 @@ window.addEventListener('load', () => {
 function construct() {
 
     const canvas = new fabric.Canvas('c', { selection: false });
-
-    // const dirliv = '<?php echo get_template_directory_uri()?>/assets/cons/living';
-    // const dirkit = '<?php echo get_template_directory_uri()?>/assets/cons/kitchen';
-    // const dirbed = '<?php echo get_template_directory_uri()?>/assets/cons/bdroom';
-    // const direlem = '<?php echo get_template_directory_uri()?>/assets/cons/alem';
     const ROOMS = {
         living: {
             background: `${dirliv}/img_(1).webp`,
@@ -497,14 +492,24 @@ function refreshPortfolio() {
     });
 };
 
+// function startMaps() {
+//     if (typeof mapUrl1 !== 'undefined' && document.getElementById('map1')) {
+//         loadMapScript('map1', mapUrl1);
+//     }
+//     if (typeof mapUrl2 !== 'undefined' && document.getElementById('map2')) {
+//         loadMapScript('map2', mapUrl2);
+//     }
+// }
+
 function startMaps() {
-    if (typeof mapUrl1 !== 'undefined' && document.getElementById('map1')) {
-        loadMapScript('map1', mapUrl1);
+    if (wpMaps.maps_1 && document.getElementById('map1')) {
+        loadMapScript('map1', wpMaps.maps_1);
     }
-    if (typeof mapUrl2 !== 'undefined' && document.getElementById('map2')) {
-        loadMapScript('map2', mapUrl2);
+    if (wpMaps.maps_2 && document.getElementById('map2')) {
+        loadMapScript('map2', wpMaps.maps_2);
     }
 }
+
 
 function loadMapScript(containerId, mapUrl) {
     const script = document.createElement('script');

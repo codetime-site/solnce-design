@@ -13,6 +13,25 @@ function reg_scripts()
     require get_template_directory() . '/inc/scripts.php';
 }
 
+// add_action('wp_footer', function () {
+//     // require get_template_directory() . '/inc/footer_script.php';
+
+//     $map1 = get_query_var('maps_1');
+//     $map2 = get_query_var('maps_2');
+
+//     if ($map1 || $map2) {
+//         // Проверяем, зарегистрирован ли скрипт
+//         if (wp_script_is('some_scripts', 'registered') || wp_script_is('some_scripts', 'enqueued')) {
+//             wp_localize_script('some_scripts', 'wpMaps', [
+//                 'maps_1' => $map1,
+//                 'maps_2' => $map2,
+//             ]);
+//         }
+//     }
+
+// }, 20);
+
+
 // Регистрация меню
 add_action('after_setup_theme', 'reg_menu');
 function reg_menu()
@@ -65,7 +84,7 @@ add_filter('wpcf7_form_tag', function ($tag) {
     // Получаем ID текущего поста (страницы/товара)
     $post_id = get_the_ID();
 
-  if (! empty($tag['name']) && $tag['name'] === 'product_id') {
+    if (!empty($tag['name']) && $tag['name'] === 'product_id') {
         $post_id = get_the_ID();
         if ($post_id) {
             $tag['values'] = [$post_id];
@@ -115,13 +134,15 @@ add_filter('wpcf7_form_tag', function ($tag) {
 add_action('wp_ajax_upload_canvas', 'upload_canvas');
 add_action('wp_ajax_nopriv_upload_canvas', 'upload_canvas');
 
-function upload_canvas() {
-    if(empty($_FILES['canvas_image'])) wp_send_json_error('No file');
+function upload_canvas()
+{
+    if (empty($_FILES['canvas_image']))
+        wp_send_json_error('No file');
 
     $file = $_FILES['canvas_image'];
     $upload = wp_handle_upload($file, ['test_form' => false]);
 
-    if(isset($upload['url'])) {
+    if (isset($upload['url'])) {
         wp_send_json_success(['url' => $upload['url']]);
     } else {
         wp_send_json_error('Upload failed');

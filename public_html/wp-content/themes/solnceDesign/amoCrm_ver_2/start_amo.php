@@ -1,7 +1,6 @@
 <?php
 function send_selected_cf7_to_amocrm($contact_form)
 {
-
     // === Настройки пайплайнов ===
     $pipeline_svet_potolki = 6967578;
     $status_svet_potolki = 58548442;
@@ -37,7 +36,7 @@ function send_selected_cf7_to_amocrm($contact_form)
         error_log('Категории поста #' . $product_id . ': ' . print_r($categories, true));
 
         // Список “световых” ключевых слов (слаги)
-        $svet_keywords = ['osveshhenie', 'lyustry', 'potolki', 'lampy-nastolnye'];
+        $svet_keywords = ['osveshhenie', 'lyustry', 'potolki'];
         $is_svet = false;
 
         if (!empty($categories)) {
