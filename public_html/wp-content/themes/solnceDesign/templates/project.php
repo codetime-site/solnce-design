@@ -50,6 +50,7 @@ $arr = [];
                                         </ul>
                                     </div>
                                 </div>
+
                                 <div class="min__pic">
                                     <div id="thumbnail-slider-<?php echo $index; ?>" class="splide thumbnail-slider"
                                         aria-label="Thumbnail Slider">
@@ -57,8 +58,8 @@ $arr = [];
                                             <ul class="splide__list">
                                                 <?php if (is_array($image) && !empty($image)): ?>
                                                     <?php foreach ($image as $images): ?>
-                                                        <li class="splide__slide">
-                                                            <img src="<?php echo esc_url($images['sizes']['thumbnail']); ?>" alt="">
+                                                        <li class="splide__slide open_this_slide">
+                                                            <img src="<?php echo esc_url($images['sizes']['large']); ?>" alt="">
                                                         </li>
                                                     <?php endforeach; ?>
                                                 <?php endif; ?>
@@ -66,6 +67,8 @@ $arr = [];
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
 
 
@@ -107,3 +110,62 @@ $arr = [];
         </div>
     </div>
 </section>
+
+<div class="img-modal" id="imgModal">
+    <div class="img-modal__content">
+        <button class="img-modal__close" id="closeImgModal"><span class="fontello-cancel modal-clr"></span></button>
+        <img id="modalImage" src="" alt="">
+    </div>
+</div>
+
+<style>
+    .modal-clr{
+        color: #fe4f18;
+    }
+    .img-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .img-modal.active {
+        display: flex;
+    }
+
+    .img-modal__content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .img-modal__content img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .img-modal__close {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 28px;
+        background: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        cursor: pointer;
+        padding: unset;
+    }
+
+    .img-modal__close:hover {
+        background: #ddd;
+    }
+</style>
+

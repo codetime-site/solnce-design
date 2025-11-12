@@ -1,10 +1,19 @@
-<?php while (have_rows("flex_page")):the_row(); ?>
 
+<?php while (have_rows("flex_page")): the_row(); ?>
     <?php if (get_row_layout() === "hero"): ?>
         <?php get_template_part('templates/hero'); ?>
 
     <?php elseif (get_row_layout() === "connect"): ?>
-        <?php get_template_part('templates/flex/flex_single'); ?>
+        <?php $acf_post_obj = get_sub_field('post'); ?>
+        <?php if ($acf_post_obj): ?>
+            <?php foreach ($acf_post_obj as $post):
+                setup_postdata($post); ?>
+                <?php if (have_rows("flex_page")): ?>
+                    <?php get_template_part("templates/flex/flex"); ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php wp_reset_postdata(); ?>
+        <?php endif; ?>
 
     <?php elseif (get_row_layout() === "work_step"): ?>
         <?php get_template_part('templates/work'); ?>
@@ -63,8 +72,8 @@
     <?php elseif (get_row_layout() === "parent_cat"): ?>
         <?php get_template_part('templates/parent_cat'); ?>
 
-    <?php elseif (get_row_layout() === "catalog"): ?>
-        <?php get_template_part('templates/catalog'); ?>
+    <?php /*elseif (get_row_layout() === "catalog"): ?>
+        <?php get_template_part('/templates/delete/catalog'); */?>
 
     <?php endif; ?>
 <?php endwhile; ?>

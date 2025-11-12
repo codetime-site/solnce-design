@@ -1,10 +1,18 @@
-
 canvas
     // border 1px solid #ccc
     border-radius 8px
     display block
     margin-top 10px
     object-fit contain
+
+canvas#c 
+    position: absolute;
+    width: 900px;
+    height: 600px;
+    left: 0px;
+    top: 0px;
+    touch-action: none;
+    user-select: none;
 
 #buttons,
 #elements,
@@ -23,7 +31,7 @@ canvas
     border none
     border-radius 6px
     cursor pointer
-    background #2563eb
+    background clr(sun);
     color white
     transition background 0.2s
 
@@ -83,6 +91,10 @@ canvas
 // ======== MOBILE ADAPTIVE ========
 // Для экранов меньше 768px
 @media (max-width: 768px)
+    canvas#c 
+        width 100% !important
+        height auto !important
+        
     .container
         width 100%
         padding 10px
