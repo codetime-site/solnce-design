@@ -5,13 +5,11 @@
 // Функция для получения дочерних категорий из родительской
 
 require_once get_template_directory() . "/templates/catalog/catalog_func.php"; ?>
+
 <main id="main">
-
     <?php require_once get_template_directory() . "/templates/catalog/catalog_flex_header.php"; ?>
-
     <div class="container">
         <div class="block_padding_60"></div>
-
         <div class="header_block">
             <h2 class="title">Товары с фильтрацией</h2>
             <hr class="title__under">

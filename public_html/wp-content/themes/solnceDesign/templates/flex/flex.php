@@ -1,79 +1,104 @@
+<?php while (have_rows('flex_page')) : the_row(); ?>
+    <?php $layout = get_row_layout(); ?>
+    <?php switch ($layout) :
+        case 'hero':
+            get_template_part('templates/hero');
+            break;
 
-<?php while (have_rows("flex_page")): the_row(); ?>
-    <?php if (get_row_layout() === "hero"): ?>
-        <?php get_template_part('templates/hero'); ?>
+        case 'work_step':
+            get_template_part('templates/work');
+            break;
 
-    <?php elseif (get_row_layout() === "connect"): ?>
-        <?php $acf_post_obj = get_sub_field('post'); ?>
-        <?php if ($acf_post_obj): ?>
-            <?php foreach ($acf_post_obj as $post):
-                setup_postdata($post); ?>
-                <?php if (have_rows("flex_page")): ?>
-                    <?php get_template_part("templates/flex/flex"); ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            <?php wp_reset_postdata(); ?>
-        <?php endif; ?>
+        case 'our_project':
+            get_template_part('templates/project');
+            break;
 
-    <?php elseif (get_row_layout() === "work_step"): ?>
-        <?php get_template_part('templates/work'); ?>
+        case 'reviews':
+            get_template_part('templates/reviews');
+            break;
 
-    <?php elseif (get_row_layout() === "our_project"): ?>
-        <?php get_template_part('templates/project'); ?>
+        case 'service':
+            get_template_part('templates/service');
+            break;
 
-    <?php elseif (get_row_layout() === "reviews"): ?>
-        <?php get_template_part('templates/reviews'); ?>
+        case 'order':
+            get_template_part('templates/universal');
+            break;
 
-    <?php elseif (get_row_layout() === "service"): ?>
-        <?php get_template_part('templates/service'); ?>
+        case 'single_galary':
+            get_template_part('templates/single_galary');
+            break;
 
-    <?php elseif (get_row_layout() === "order"): ?>
-        <?php get_template_part('templates/universal'); ?>
+        case 'connect':
+            $acf_post_obj = get_sub_field('post');
+            if ($acf_post_obj) {
+                foreach ($acf_post_obj as $post) {
+                    setup_postdata($post);
+                    if (have_rows('flex_page')) {
+                        get_template_part('templates/flex/flex');
+                    }
+                }
+                wp_reset_postdata();
+            }
+            break;
 
-    <?php elseif (get_row_layout() === "single_galary"): ?>
-        <?php get_template_part('templates/single_galary'); ?>
+        case 'video':
+            get_template_part('templates/videos');
+            break;
 
-    <?php elseif (get_row_layout() === "video"): ?>
-        <?php get_template_part('templates/videos'); ?>
+        case 'rec':
+            get_template_part('templates/rec');
+            break;
 
-    <?php elseif (get_row_layout() === "rec"): ?>
-        <?php get_template_part('templates/rec'); ?>
+        case 'worker':
+            get_template_part('templates/professionals');
+            break;
 
-    <?php elseif (get_row_layout() === "order"): ?>
-        <?php get_template_part('templates/hero'); ?>
+        case 'maps':
+            get_template_part('templates/maps');
+            break;
 
-    <?php elseif (get_row_layout() === "worker"): ?>
-        <?php get_template_part('templates/professionals'); ?>
+        case 'contact':
+            get_template_part('templates/contact');
+            break;
 
-    <?php elseif (get_row_layout() === "maps"): ?>
-        <?php get_template_part('templates/maps'); ?>
+        case 'form':
+            get_template_part('templates/form');
+            break;
 
-    <?php elseif (get_row_layout() === "contact"): ?>
-        <?php get_template_part('templates/contact'); ?>
+        case 'galary':
+            get_template_part('templates/galaryImg');
+            break;
 
-    <?php elseif (get_row_layout() === "form"): ?>
-        <?php get_template_part('templates/form'); ?>
+        case 'postforproduct':
+            get_template_part('templates/galary');
+            break;
 
-    <?php elseif (get_row_layout() === "galary"): ?>
-        <?php get_template_part('templates/galaryImg'); ?>
+        case 'constructor':
+            get_template_part('templates/constructor');
+            break;
 
-    <?php elseif (get_row_layout() === "postforproduct"): ?>
-        <?php get_template_part('templates/galary'); ?>
+        case 'portfolio':
+            get_template_part('templates/portfolio');
+            break;
 
-    <?php elseif (get_row_layout() === "constructor"): ?>
-        <?php get_template_part('templates/constructor'); ?>
+        case 'single_select_materials':
+            get_template_part('templates/single_select_materials');
+            break;
 
-    <?php elseif (get_row_layout() === "portfolio"): ?>
-        <?php get_template_part('templates/portfolio'); ?>
+        case 'parent_cat':
+            get_template_part('templates/parent_cat');
+            break;
 
-    <?php elseif (get_row_layout() === "single_select_materials"): ?>
-        <?php get_template_part('/templates/single_select_materials'); ?>
+        // case 'catalog':
+        //     get_template_part('templates/delete/catalog');
+        //     break;
 
-    <?php elseif (get_row_layout() === "parent_cat"): ?>
-        <?php get_template_part('templates/parent_cat'); ?>
+        default:
+            // Можно добавить логирование или заглушку
+            // error_log("Неизвестный layout: $layout");
+            break;
 
-    <?php /*elseif (get_row_layout() === "catalog"): ?>
-        <?php get_template_part('/templates/delete/catalog'); */?>
+    endswitch; ?>
 
-    <?php endif; ?>
 <?php endwhile; ?>
