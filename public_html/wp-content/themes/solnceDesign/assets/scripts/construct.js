@@ -36,7 +36,7 @@ window.ROOMS = {
     },
 
     bedroom: {
-        background: `${dirbed}/img_8.webp`,
+        background: `${dirbed}/bed_00.jpeg`,
         items: [
             // потолки
             { id: 'living-ceiling1', name: 'Потолок 1', url: `${direlem}/back_1.webp`, x: 0, y: 0, w: 1000, h: 505, group: 'ceiling' },
@@ -282,14 +282,14 @@ function uploadCanvasAndSubmit() {
         method: 'POST',
         body: formData
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.url) {
-            document.querySelector('input[name="acf_image"]').value = data.url;
-            document.querySelector('.wpcf7 form').submit();
-        }
-    })
-    .catch(err => console.error('Ошибка при отправке canvas:', err));
+        .then(res => res.json())
+        .then(data => {
+            if (data.url) {
+                document.querySelector('input[name="acf_image"]').value = data.url;
+                document.querySelector('.wpcf7 form').submit();
+            }
+        })
+        .catch(err => console.error('Ошибка при отправке canvas:', err));
 }
 
 function dataURLToBlob(dataURL) {
@@ -302,4 +302,122 @@ function dataURLToBlob(dataURL) {
     }
     return new Blob([intArray], { type: 'image/png' });
 }
+
+
+
+
+
+// === Новая функция: загрузка canvas и подстановка в скрытое поле ===
+function uploadAndAttachToForm() {
+    return new Promise((resolve, reject) => {
+        const dataURL = canvas.toDataURL('image/png');
+        const blob = dataURLToBlob(dataURL);
+
+        const formData = new FormData();
+        formData.append('canvas_image', blob, `room-${currentRoom}-${Date.now()}.png`);
+
+        fetch(`${wpData.ajaxUrl}?action=upload_canvas`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.data?.url) {
+                    // Находим скрытое поле acf_image в форме CF7 и ставим туда URL
+                    const acfImageInput = document.querySelector('input[name="acf_image"]');
+                    if (acfImageInput) {
+                        acfImageInput.value = data.data.url;
+                    }
+                    resolve(data.data.url);
+                } else {
+                    reject(new Error(data.data?.message || 'Upload failed'));
+                }
+            })
+            .catch(err => {
+                console.error('Ошибка загрузки canvas:', err);
+                reject(err);
+            });
+    });
+}
+
+// === Перехват отправки формы CF7 ===
+document.addEventListener('wpcf7submit', function (event) {
+    // Не нужно — событие происходит ПОСЛЕ отправки.
+    // Нам нужно ДО — используем `wpcf7beforesubmit`
+});
+
+// ✅ Важно: подключим событие ДО отправки
+document.addEventListener('wpcf7beforesubmit', function (event) {
+    const form = event.detail.contactForm;
+
+    // Показываем лоадер или блокируем кнопку, если хочешь
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Сохраняю изображение...';
+    }
+
+    // Загружаем canvas и ждём
+    event.preventDefault(); // ОТМЕНЯЕМ обычную отправку
+
+    uploadAndAttachToForm()
+        .then(url => {
+            console.log('Canvas сохранён:', url);
+            // Теперь вручную отправляем форму
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    // CF7 требует этих заголовков для AJAX-режима (если включён)
+                    // Но проще — просто submit(), т.к. все поля уже заполнены
+                }
+            })
+                .then(res => res.text()) // CF7 возвращает HTML ответ
+                .then(html => {
+                    // Имитируем стандартный ответ CF7
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const message = doc.querySelector('.wpcf7-response-output')?.textContent || 'Спасибо!';
+
+                    // Показываем сообщение
+                    const output = form.querySelector('.wpcf7-response-output');
+                    if (output) {
+                        output.style.display = 'block';
+                        output.textContent = message;
+                        output.className = 'wpcf7-response-output wpcf7-display-none wpcf7-mail-sent-ok';
+                    }
+
+                    // Если хочешь — перенаправить или сбросить
+                })
+                .catch(err => {
+                    console.error('Ошибка отправки формы:', err);
+                    const output = form.querySelector('.wpcf7-response-output');
+                    if (output) {
+                        output.style.display = 'block';
+                        output.textContent = 'Ошибка при отправке. Попробуйте ещё раз.';
+                        output.className = 'wpcf7-response-output wpcf7-display-none wpcf7-mail-sent-ng';
+                    }
+                })
+                .finally(() => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Оставить заявку';
+                    }
+                });
+        })
+        .catch(err => {
+            console.error('Не удалось загрузить изображение:', err);
+            const output = form.querySelector('.wpcf7-response-output');
+            if (output) {
+                output.style.display = 'block';
+                output.textContent = 'Не удалось сохранить изображение. Попробуйте ещё раз.';
+                output.className = 'wpcf7-response-output wpcf7-display-none wpcf7-mail-sent-ng';
+            }
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Оставить заявку';
+            }
+        });
+});
 

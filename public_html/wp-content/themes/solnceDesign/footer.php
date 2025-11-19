@@ -46,11 +46,7 @@
 
 <script>
   (function () {
-    // Журнал для отладки — оставь временно, чтобы видеть что происходит
-    function log(...args) {
-      if (window.console) console.log('[ModalThumb]', ...args);
-    }
-
+   
     // Ищем все контейнеры с мини-галереями
     const thumbnailContainers = document.querySelectorAll('.thumbnail-slider');
 
